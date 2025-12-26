@@ -64,9 +64,10 @@ const commands = [
         .setName('list_admins')
         .setDescription('List all authorized admins'),
     new SlashCommandBuilder()
-        .setName('update_cookies')
-        .setDescription('Update the session cookies for the bot')
-        .addStringOption(option => option.setName('cookies').setDescription('The new cookie string or JSON').setRequired(true)),
+        .setName('set_cookie')
+        .setDescription('Update the session cookies (paste string or upload cookies.json)')
+        .addStringOption(option => option.setName('cookies').setDescription('The new cookie string or JSON').setRequired(false))
+        .addAttachmentOption(option => option.setName('file').setDescription('The cookies.json file from setup_login.js').setRequired(false)),
 ];
 
 client.once('ready', async () => {
@@ -278,9 +279,25 @@ client.on('interactionCreate', async interaction => {
                 await interaction.reply(`🛡️ **Authorized Admins:**\n${list}`);
             }
         }
-        else if (commandName === 'update_cookies') {
-            const cookies = interaction.options.getString('cookies');
-            // We use the db function to save it to settings
+        else if (commandName === 'set_cookie') {
+            let cookies = interaction.options.getString('cookies');
+            const file = interaction.options.getAttachment('file');
+
+            if (file) {
+                if (!file.name.endsWith('.json')) {
+                    await interaction.reply({ content: '❌ Please upload a valid `.json` file.', flags: MessageFlags.Ephemeral });
+                    return;
+                }
+                const response = await fetch(file.url);
+                cookies = await response.text();
+            }
+
+            if (!cookies) {
+                await interaction.reply({ content: '❌ Please provide cookies via string OR file attachment.', flags: MessageFlags.Ephemeral });
+                return;
+            }
+
+            // Save to DB
             const { db } = await import('./db.js');
             await db.read();
             db.data.settings ||= {};
