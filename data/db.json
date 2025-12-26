@@ -4,8 +4,8 @@
       "id": "1765721905718",
       "name": "k1",
       "targetServer": "e-60",
-      "lastRun": "2025-12-25T06:11:04.780Z",
-      "status": "error",
+      "lastRun": null,
+      "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX18rpuCgLwCGdLCiP/9740bEo2aJrewN/Ds="
     },
@@ -13,8 +13,8 @@
       "id": "1765723147990",
       "name": "Zephyr",
       "targetServer": "E-60",
-      "lastRun": "2025-12-25T06:13:09.240Z",
-      "status": "error",
+      "lastRun": null,
+      "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX18o0YtVUW9q4EIo5d4CGOYLsiEnkNx71wY="
     },
@@ -22,8 +22,8 @@
       "id": "1765723528148",
       "name": "fnel",
       "targetServer": "E-21",
-      "lastRun": "2025-12-25T06:15:14.086Z",
-      "status": "error",
+      "lastRun": null,
+      "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1+Ef5UYvbktdbwSo85/oPTd8Nj3uAlhvDY="
     },
@@ -31,8 +31,8 @@
       "id": "1765723891982",
       "name": "Yashiro",
       "targetServer": "E-58",
-      "lastRun": "2025-12-25T06:17:18.120Z",
-      "status": "error",
+      "lastRun": null,
+      "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1+r2Y3q7QMzYoi+Qrx/3dEe3Lfu2VyBVDo="
     },
@@ -40,8 +40,8 @@
       "id": "1765755450067",
       "name": "salt",
       "targetServer": "e-21",
-      "lastRun": "2025-12-25T06:19:21.854Z",
-      "status": "error",
+      "lastRun": null,
+      "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1/+j34EoauzJ/aSUoldPvbKNpBx06nn1rU="
     },
@@ -49,8 +49,8 @@
       "id": "1765755482058",
       "name": "god",
       "targetServer": "E-21",
-      "lastRun": "2025-12-25T06:21:26.034Z",
-      "status": "error",
+      "lastRun": null,
+      "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX19b5taKTozbGn62CW3nJRon9uDw7/hMp5A="
     },
@@ -58,8 +58,8 @@
       "id": "1765755535758",
       "name": "kita",
       "targetServer": "E-60",
-      "lastRun": "2025-12-25T06:23:30.588Z",
-      "status": "error",
+      "lastRun": null,
+      "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX19w9hfcU6+oWaewEa1kTCkBtge9FA8nX4Y="
     },
@@ -67,8 +67,8 @@
       "id": "1765755564406",
       "name": "sleepy",
       "targetServer": "E-60",
-      "lastRun": "2025-12-25T06:25:05.584Z",
-      "status": "error",
+      "lastRun": null,
+      "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX185LC7T69XmjYGI/kiKHzqdzYa0FzQXdSA="
     },
@@ -76,8 +76,8 @@
       "id": "1765755599368",
       "name": "asa",
       "targetServer": "E-60",
-      "lastRun": "2025-12-25T06:25:04.835Z",
-      "status": "error",
+      "lastRun": null,
+      "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1+jCE9Vq2Zj3HdzXouMcxK9KC/iGaYOqaE="
     },
@@ -85,8 +85,8 @@
       "id": "1765755705965",
       "name": "froz",
       "targetServer": "E-60",
-      "lastRun": "2025-12-25T06:41:04.653Z",
-      "status": "error",
+      "lastRun": null,
+      "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1/QgZhzurUpoB/kVqB0yvbueJL13k6jNDg="
     },
@@ -94,8 +94,8 @@
       "id": "1765755740133",
       "name": "rifkyxd",
       "targetServer": "E-60",
-      "lastRun": "2025-12-25T06:43:08.364Z",
-      "status": "error",
+      "lastRun": null,
+      "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX18VJTGRqd97dCSKWlwUrnEbJPf3qPVNwOc="
     },
@@ -103,8 +103,8 @@
       "id": "1765783757673",
       "name": "pan chi",
       "targetServer": "e-18",
-      "lastRun": "2025-12-25T06:45:12.155Z",
-      "status": "error",
+      "lastRun": null,
+      "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX18ueF/fhtEF1RNyiIg7+PL9o7BayoW5A6o="
     },
@@ -112,8 +112,8 @@
       "id": "1765783794253",
       "name": "k10",
       "targetServer": "e-18",
-      "lastRun": "2025-12-25T06:47:16.071Z",
-      "status": "error",
+      "lastRun": null,
+      "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1/fLCff4s0T3Q/8Sdyx8aJzqPVh/gKExv0="
     },
@@ -121,8 +121,8 @@
       "id": "1765784751193",
       "name": "c4",
       "targetServer": "e-15",
-      "lastRun": "2025-12-25T06:49:19.844Z",
-      "status": "error",
+      "lastRun": null,
+      "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1/ZdnWdBgF65Em+zMtA+XO++vATWjuQ0tI="
     },
@@ -130,8 +130,8 @@
       "id": "1765899898950",
       "name": "Senoo57",
       "targetServer": "E-57",
-      "lastRun": "2025-12-25T06:51:18.803Z",
-      "status": "error",
+      "lastRun": null,
+      "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX194Pk1YdJMJQnW3oqS2ON6x6ttsI6/HqlQ="
     },
@@ -139,7 +139,7 @@
       "id": "1765899948230",
       "name": "Mirage",
       "targetServer": "E-58",
-      "lastRun": "2025-12-17T03:43:32.669Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1++MyqLp8sZmi6j7cA9bPPnSv/4UyWq6JI="
@@ -148,7 +148,7 @@
       "id": "1765899978706",
       "name": "Ss",
       "targetServer": "E-58",
-      "lastRun": "2025-12-17T04:04:45.094Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX18uBYdYJtkXfmQ563UxT/kUHGLbjO3H9zk="
@@ -157,7 +157,7 @@
       "id": "1765900002765",
       "name": "Duragon",
       "targetServer": "E-59",
-      "lastRun": "2025-12-17T04:14:38.929Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1+Axdb1AKuvoibM63UUmsXH9L5iSfMbRWg="
@@ -166,7 +166,7 @@
       "id": "1765900024802",
       "name": "Loyd",
       "targetServer": "E-60",
-      "lastRun": "2025-12-17T04:19:28.959Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX19a/L5Kj7AGAwuCKiMXQMJVpmfYrXdZ1qc="
@@ -175,7 +175,7 @@
       "id": "1765900134102",
       "name": "NeckDeep",
       "targetServer": "E60",
-      "lastRun": "2025-12-17T04:24:22.694Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX198rpSNhEGs5WvXsJJnkqhrGwY6w41sRZs="
@@ -184,7 +184,7 @@
       "id": "1765900189429",
       "name": "Enrai",
       "targetServer": "E-60",
-      "lastRun": "2025-12-17T04:29:12.866Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1/3vwS4w2CZNeBrfLoQyZn+fzzOWTmvKSE="
@@ -193,7 +193,7 @@
       "id": "1765900358725",
       "name": "Aoi",
       "targetServer": "E-60",
-      "lastRun": "2025-12-17T04:34:02.896Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1+3zm04bzoFsbNXaq5oKB8JwtT+LVMHa18="
@@ -202,7 +202,7 @@
       "id": "1765900438876",
       "name": "Mitsu",
       "targetServer": "E-60",
-      "lastRun": "2025-12-17T04:38:54.076Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1+n59zkW71EIZ8ImNIB9ZKWkBpRJOR/nIc="
@@ -211,7 +211,7 @@
       "id": "1765900542830",
       "name": "Katsudon",
       "targetServer": "E-60",
-      "lastRun": "2025-12-17T04:43:44.467Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1/z2C5aUQcx8c9zlghB0t0pKrBJtkFxqKM="
@@ -220,7 +220,7 @@
       "id": "1765900584011",
       "name": "Aezranits",
       "targetServer": "E-60",
-      "lastRun": "2025-12-17T05:04:46.075Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX18GflHYdhdPkbYe4YSuK0q7qgYEAX0/8Qw="
@@ -229,7 +229,7 @@
       "id": "1765900621588",
       "name": "Raikiri",
       "targetServer": "E-60",
-      "lastRun": "2025-12-17T05:19:42.577Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX19rzmKrnn/eBXDjO/hZ5iRCQZwHF0jV3n8="
@@ -238,7 +238,7 @@
       "id": "1765900665667",
       "name": "Raikiri.2",
       "targetServer": "E-60",
-      "lastRun": "2025-12-17T06:04:45.589Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX19fNEEMtCGq415BrvfkllcrxWE3pAoxung="
@@ -247,7 +247,7 @@
       "id": "1765900711823",
       "name": "Mail",
       "targetServer": "E-60",
-      "lastRun": "2025-12-17T06:09:35.768Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX18ZklAOf5Ej224mfa+868uuFKM4EI2HAlw="
@@ -256,7 +256,7 @@
       "id": "1765900747617",
       "name": "CMC Matsuo",
       "targetServer": "E-60",
-      "lastRun": "2025-12-17T06:14:26.970Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX19OabNevYSBLslhkEi0KxA6ZZ2musdOodk="
@@ -265,7 +265,7 @@
       "id": "1765900770794",
       "name": "Tennou",
       "targetServer": "E-60",
-      "lastRun": "2025-12-17T06:19:16.134Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX18LntmarztF8ptMgcMdxFylNFG5V3+Hq9Q="
@@ -274,7 +274,7 @@
       "id": "1765900797431",
       "name": "CMC Senn",
       "targetServer": "E-60",
-      "lastRun": "2025-12-17T06:24:06.500Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX18JfxF3zjPnTpo8JzEhGLgO1aVqhFUOH5U="
@@ -283,7 +283,7 @@
       "id": "1765900818187",
       "name": "Matsuo",
       "targetServer": "E-63",
-      "lastRun": "2025-12-17T06:28:56.618Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1+sfc6S/r/hiQxAPEfdV5nXCLrO/uwBCXg="
@@ -292,7 +292,7 @@
       "id": "1765900847848",
       "name": "Yatsu",
       "targetServer": "E-63",
-      "lastRun": "2025-12-17T06:33:47.789Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX18IpDDb4nQfO3h3vueKPGI6mjPhjJJ2mlE="
@@ -301,7 +301,7 @@
       "id": "1765900867763",
       "name": "Guin",
       "targetServer": "E-59",
-      "lastRun": "2025-12-17T06:38:39.175Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1/H19yt5UZMvZYarbeJiu81kYawkNvSyNU="
@@ -310,7 +310,7 @@
       "id": "1765900886975",
       "name": "Numelgon",
       "targetServer": "E-58",
-      "lastRun": "2025-12-17T06:43:30.272Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX18QrF67vguMUbiV6znKhcHqEWmFrMQ2Hbc="
@@ -319,7 +319,7 @@
       "id": "1765927550340",
       "name": "mora",
       "targetServer": "E-21",
-      "lastRun": "2025-12-17T07:04:56.204Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1/4154a6jkNElbHzibiidoLE8xsk28XZtM="
@@ -328,7 +328,7 @@
       "id": "1765930151939",
       "name": "Senorr",
       "targetServer": "E-60",
-      "lastRun": "2025-12-17T07:09:46.617Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX19HqTIndxt3/0ep0bP1L3or2RAwPSoDxl0="
@@ -337,7 +337,7 @@
       "id": "1765932565211",
       "name": "last",
       "targetServer": "E-21",
-      "lastRun": "2025-12-17T07:14:37.065Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1/LcLV9WeVGod2PjPIP885F1NRhTLLanDk="
@@ -346,7 +346,7 @@
       "id": "1765932604005",
       "name": "lastone",
       "targetServer": "E-21",
-      "lastRun": "2025-12-17T07:19:30.262Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX193cjGBnPk+PZ+JdB0vw9bFvVAx2EqZh04="
@@ -355,7 +355,7 @@
       "id": "1766209569967",
       "name": "Necroman",
       "targetServer": "E-58",
-      "lastRun": "2025-12-20T07:32:02.803Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1+5LM0PRcrBkyrt6LnhkHa60Gle0G3JU2E="
@@ -391,7 +391,7 @@
       "id": "1766216360854",
       "name": "Haru",
       "targetServer": "E-60",
-      "lastRun": "2025-12-20T07:44:15.177Z",
+      "lastRun": null,
       "status": "idle",
       "pingEnabled": false,
       "encryptedCode": "U2FsdGVkX1/5O9cNc+gDGI2g3ei1kMBW3zbbT1QmBX8="
@@ -409,7 +409,7 @@
       "id": "1766367302077",
       "name": "Élysian",
       "targetServer": "E- 54",
-      "lastRun": "2025-12-22T08:25:53.782Z",
+      "lastRun": null,
       "userId": "791627940927635456",
       "status": "idle",
       "pingEnabled": false,
@@ -420,7 +420,7 @@
       "id": "1766367881694",
       "name": "ゆき",
       "targetServer": "E-54",
-      "lastRun": "2025-12-22T08:59:47.532Z",
+      "lastRun": null,
       "userId": "791627940927635456",
       "status": "idle",
       "pingEnabled": false,
@@ -431,7 +431,7 @@
       "id": "1766367911027",
       "name": "ユーキ",
       "targetServer": "E-54",
-      "lastRun": "2025-12-22T09:04:37.853Z",
+      "lastRun": null,
       "userId": "791627940927635456",
       "status": "idle",
       "pingEnabled": false,

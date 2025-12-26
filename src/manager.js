@@ -343,9 +343,10 @@ export const checkAndRun = async () => {
                 // Success handling handled in executeSession
             }
 
-            // Small delay between successful accounts
+            // ⚠️ STABILITY UPDATE: Wait 10 minutes between accounts
             if (result.success) {
-                await new Promise(r => setTimeout(r, 5000));
+                console.log(`[Manager] Session success. Waiting 10 minutes before next account...`);
+                await new Promise(r => setTimeout(r, 600000));
             }
         }
     } catch (err) {
