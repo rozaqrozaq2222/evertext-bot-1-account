@@ -1,0 +1,230 @@
+{
+  "accounts": [
+    {
+      "id": "1765873998782",
+      "name": "Zephyr",
+      "targetServer": "E-2",
+      "lastRun": "2025-12-25T15:09:44.201655100+00:00",
+      "status": "idle",
+      "code": "U2FsdGVkX19515l+h/pHO5y0aVj6Akl63L5/Kq8m0jA=",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1765874212918",
+      "name": "fnel",
+      "targetServer": "J-1",
+      "lastRun": "2025-12-25T01:54:19.467888700+00:00",
+      "status": "error",
+      "code": "WD7T91ACZV3W",
+      "pingEnabled": false,
+      "handoutEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1765874246830",
+      "name": "Ryue",
+      "targetServer": "J-1",
+      "lastRun": "2025-12-25T01:54:32.428315100+00:00",
+      "status": "error",
+      "code": "U2FsdGVkX1/12345/67890/ABCDE/FGHIJ/KLMNO",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1765900818187",
+      "name": "Matsuo",
+      "targetServer": "E-63",
+      "lastRun": "2025-12-17T06:28:56.618Z",
+      "status": "idle",
+      "code": "CZRRV0MDEBJG",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1765900847848",
+      "name": "Yatsu",
+      "targetServer": "E-63",
+      "lastRun": "2025-12-17T06:33:47.789Z",
+      "status": "idle",
+      "code": "A2Q67F5RNQP6",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1765900867763",
+      "name": "Guin",
+      "targetServer": "E-59",
+      "lastRun": "2025-12-17T06:38:39.175Z",
+      "status": "idle",
+      "code": "J23459AW66X0",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1765900886975",
+      "name": "Numelgon",
+      "targetServer": "E-58",
+      "lastRun": "2025-12-17T06:43:30.272Z",
+      "status": "idle",
+      "code": "FDLKTL05X4WY",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1765927550340",
+      "name": "mora",
+      "targetServer": "E-21",
+      "lastRun": "2025-12-17T07:04:56.204Z",
+      "status": "idle",
+      "code": "WXFVDB3YLAJE",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1765930151939",
+      "name": "Senorr",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-17T07:09:46.617Z",
+      "status": "idle",
+      "code": "3KCFRFAXY28J",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1765932565211",
+      "name": "last",
+      "targetServer": "E-21",
+      "lastRun": "2025-12-17T07:14:37.065Z",
+      "status": "idle",
+      "code": "77D4M5V4ELMA",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1765932604005",
+      "name": "lastone",
+      "targetServer": "E-21",
+      "lastRun": "2025-12-17T07:19:30.262Z",
+      "status": "idle",
+      "code": "KVVTH9VCHL39",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1766209569967",
+      "name": "Necroman",
+      "targetServer": "E-58",
+      "lastRun": "2025-12-20T07:32:02.803Z",
+      "status": "idle",
+      "code": "RBL768AYAN4Y",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1766209603489",
+      "name": "Senoo v1",
+      "targetServer": "E-58",
+      "lastRun": null,
+      "status": "idle",
+      "code": "X2MW83AHXQ75",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1766209625438",
+      "name": "Kagerou",
+      "targetServer": "E-58",
+      "lastRun": null,
+      "status": "idle",
+      "code": "CC6DFH8LBG3K",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1766209649459",
+      "name": "a,,a?-a,?",
+      "targetServer": "E-58",
+      "lastRun": null,
+      "status": "idle",
+      "code": "ZPK4CDCJN0C1",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1766216360854",
+      "name": "Haru",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-20T07:44:15.177Z",
+      "status": "idle",
+      "code": "H8BMNRBQZ1CN",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1766216457926",
+      "name": "Mecha",
+      "targetServer": "J-160",
+      "lastRun": null,
+      "status": "idle",
+      "code": "ACL1E1QR1B2F",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1766216491476",
+      "name": "Naofumi",
+      "targetServer": "E-46",
+      "lastRun": null,
+      "status": "idle",
+      "code": "ACL1E1QR1B2F",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1766216529995",
+      "name": "Decade",
+      "targetServer": "E-48",
+      "lastRun": null,
+      "status": "idle",
+      "code": "ACL1E1QR1B2F",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1766216561350",
+      "name": "Koyomi",
+      "targetServer": "E-58",
+      "lastRun": null,
+      "status": "idle",
+      "code": "ACL1E1QR1B2F",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1766216589569",
+      "name": "Grand",
+      "targetServer": "E-57",
+      "lastRun": null,
+      "status": "idle",
+      "code": "ACL1E1QR1B2F",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    },
+    {
+      "id": "1766216627710",
+      "name": "Alpha",
+      "targetServer": "E-59",
+      "lastRun": null,
+      "status": "idle",
+      "code": "ACL1E1QR1B2F",
+      "pingEnabled": false,
+      "userId": "791627940927635456"
+    }
+  ],
+  "settings": {
+    "scheduleStart": "22:00",
+    "scheduleEnd": "18:00",
+    "cookies": ".eJw9kM1OwzAQhN8lZ4K8_su6N1BAgJS0UcuBU7W2N6JAkzZJiQri3bFA6nlnZr-Z72zbDjy-ZotpOPFVtt3FbJEB6yA5Rg1SqBaFlsY5bY0hRu0jAKJE75SMWDjFFrAlcCDQYuuhBdOyJA-GYoykiXRUlg1Gr1pNEqK1SFCkMwQ0nFRaR7YpyWkF7HyWQA487KnjbrqgnUYe_vksorVFoVSB2kiLTiQHhcDjuJ36d-6Spto0Ylk-nqu36lyXN-dl-TIvy2dVzdf64bRqjp_Y7Z4a2R1E7zZVHYY7f7ua-vsUNfDfKJcs4Y6zqfZu-qiVMOt1UzXz6lDWkr6AV8kwps-7vvun86liSJ3yYFnk2hQydz5QblWQBGSE9S77-QVXT3El.aU0Dpw.zHx_HI3WQK39VwY3paD9jx2a7yA"
+  }
+}

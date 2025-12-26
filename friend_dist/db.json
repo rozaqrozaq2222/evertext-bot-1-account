@@ -1,0 +1,10 @@
+{
+    "accounts": [],
+    "settings": {
+        "cookies": null,
+        "adminRoleId": null,
+        "logChannelId": null,
+        "muteBotMessages": false,
+        "admins": []
+    }
+}

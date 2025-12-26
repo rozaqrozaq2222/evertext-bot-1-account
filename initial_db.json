@@ -1,0 +1,512 @@
+{
+  "accounts": [
+    {
+      "id": "1765721905718",
+      "name": "k1",
+      "encryptedCode": "U2FsdGVkX197ipWsTKPDNUkhIeSXIKbVt/82AmYNF4o=",
+      "targetServer": "e-60",
+      "lastRun": "2025-12-15T05:09:49.956Z",
+      "status": "error"
+    },
+    {
+      "id": "1765723147990",
+      "name": "Zephyr",
+      "encryptedCode": "U2FsdGVkX1+Z5X0ndsIsEepOSBm2rbpFlbdUdfp3/tc=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-15T06:00:13.346Z",
+      "status": "running"
+    },
+    {
+      "id": "1765723528148",
+      "name": "fnel",
+      "encryptedCode": "U2FsdGVkX1920ud2cvtcBu4rX1W9JL281DfyJgjh0Ik=",
+      "targetServer": "E-21",
+      "lastRun": "2025-12-15T05:37:22.228Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765723891982",
+      "name": "Yashiro",
+      "encryptedCode": "U2FsdGVkX1/CWlF/Tzt58oNwvIi4Za7KIqApsyh/ooM=",
+      "targetServer": "E-58",
+      "lastRun": "2025-12-15T06:00:30.510Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765755450067",
+      "name": "salt",
+      "encryptedCode": "U2FsdGVkX1/Jy9gH6VRVUtu5SFy2S2GB0lAIqFcs0Kg=",
+      "targetServer": "e-21",
+      "lastRun": "2025-12-15T05:47:58.053Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765755482058",
+      "name": "god",
+      "encryptedCode": "U2FsdGVkX1++GEhEHY+z1hM6wrrPkWKhC6ETru2iEtY=",
+      "targetServer": "E-21",
+      "lastRun": "2025-12-15T06:00:47.267Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765755535758",
+      "name": "kita",
+      "encryptedCode": "U2FsdGVkX19zGDkXlFCl3XgNDV4XzdV4wuMtHQBt3PU=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-15T07:05:15.772Z",
+      "status": "success"
+    },
+    {
+      "id": "1765755564406",
+      "name": "sleepy",
+      "encryptedCode": "U2FsdGVkX18jlCQ/LiZ8S3wUFQF08uH8orTebp9617Q=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-15T07:05:15.772Z",
+      "status": "success"
+    },
+    {
+      "id": "1765755599368",
+      "name": "asa",
+      "encryptedCode": "U2FsdGVkX19XUaUPSk3mMuArd81i9wma9lvveWUbFgM=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-15T07:05:15.772Z",
+      "status": "success"
+    },
+    {
+      "id": "1765755599377",
+      "name": "asa",
+      "encryptedCode": "U2FsdGVkX18Yp6EfwOllSrdsw2XrGJC1Ij30lFeWYqk=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-15T07:05:15.772Z",
+      "status": "success"
+    },
+    {
+      "id": "1765755705965",
+      "name": "froz",
+      "encryptedCode": "U2FsdGVkX18NtCzm7G518ZV+93nuHMYFJ/+bEbklzrg=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-15T07:05:15.772Z",
+      "status": "success"
+    },
+    {
+      "id": "1765755740133",
+      "name": "rifkyxd",
+      "encryptedCode": "U2FsdGVkX19oLFTeicd3CRxsTn9Rq6UA1eIhI0UMotQ=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-15T07:05:15.772Z",
+      "status": "success"
+    },
+    {
+      "id": "1765783757673",
+      "name": "pan chi",
+      "encryptedCode": "U2FsdGVkX18YJb6NGSxOaMGMd5rMuc9ghP+ovwPNNmc=",
+      "targetServer": "e-18",
+      "lastRun": "2025-12-15T10:55:35.061Z",
+      "status": "success"
+    },
+    {
+      "id": "1765783794253",
+      "name": "k10",
+      "encryptedCode": "U2FsdGVkX1+7N5D67VASgsgo62rvnyas0YPhbRF9EXw=",
+      "targetServer": "e-18",
+      "lastRun": "2025-12-15T07:30:54.568Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765784751193",
+      "name": "c4",
+      "encryptedCode": "U2FsdGVkX1+Zqk90ctKHCOreSe9NN8Xk8WGerXyCSP4=",
+      "targetServer": "e-15",
+      "lastRun": "2025-12-15T08:40:12.036Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765899898950",
+      "name": "Senoo57",
+      "encryptedCode": "U2FsdGVkX19M42KrdV+dbH9njf/QBkr9EGDZFh/UuR4=",
+      "targetServer": "E-57",
+      "lastRun": "2025-12-17T03:38:41.382Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765899948230",
+      "name": "Mirage",
+      "encryptedCode": "U2FsdGVkX19l+1S9xJg7LZ5su6VB/RfWDS+TFsBFHAo=",
+      "targetServer": "E-58",
+      "lastRun": "2025-12-17T03:43:32.669Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765899978706",
+      "name": "Ss",
+      "encryptedCode": "U2FsdGVkX1/8HfZpTuDxnPPdQdn/15iiJH4taNSIuus=",
+      "targetServer": "E-58",
+      "lastRun": "2025-12-17T04:04:45.094Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900002765",
+      "name": "Duragon",
+      "encryptedCode": "U2FsdGVkX1+Ml2jR2Y0AEcnf6sGS8HsxuN4SKOeErkU=",
+      "targetServer": "E-59",
+      "lastRun": "2025-12-17T04:14:38.929Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900024802",
+      "name": "Loyd",
+      "encryptedCode": "U2FsdGVkX18+eYKpEdSb8ccZRCL+FvRn3VfMWl5wl1w=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-17T04:19:28.959Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900134102",
+      "name": "NeckDeep",
+      "encryptedCode": "U2FsdGVkX18aeQ3mZ/jvzhnnBaXnVlZXkLroHDq0wZc=",
+      "targetServer": "E60",
+      "lastRun": "2025-12-17T04:24:22.694Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900189429",
+      "name": "Enrai",
+      "encryptedCode": "U2FsdGVkX1/2EohEzrTa8eocCirIrEfOx5nZVAlv7EE=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-17T04:29:12.866Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900358725",
+      "name": "Aoi",
+      "encryptedCode": "U2FsdGVkX1+2AfILR3plW+zeKEagrRyLbRWYlvuJPMI=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-17T04:34:02.896Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900438876",
+      "name": "Mitsu",
+      "encryptedCode": "U2FsdGVkX18+XNVH+hzXq+nmvQNqrocCXwcHnDu6E/E=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-17T04:38:54.076Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900542830",
+      "name": "Katsudon",
+      "encryptedCode": "U2FsdGVkX1/a3089OJuMlJyvZ6kD0bQjUfSPI/WbWCo=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-17T04:43:44.467Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900584011",
+      "name": "Aezranits",
+      "encryptedCode": "U2FsdGVkX1/NgPer+wtbaR8xkKzUZ6WDlR3Kjl3pa0I=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-17T05:04:46.075Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900621588",
+      "name": "Raikiri",
+      "encryptedCode": "U2FsdGVkX18xySaHGgNJ4TLD4hUfxVOuqi3+0ONLRAQ=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-17T05:19:42.577Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900665667",
+      "name": "Raikiri.2",
+      "encryptedCode": "U2FsdGVkX18xhlJVdtf/BciH7B5sqEW5dRmENV2KE3s=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-17T06:04:45.589Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900711823",
+      "name": "Mail",
+      "encryptedCode": "U2FsdGVkX1/XaRlPOEYwakFQf3ZXxpOHQnBx556wDtI=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-17T06:09:35.768Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900747617",
+      "name": "CMC Matsuo",
+      "encryptedCode": "U2FsdGVkX1+LOgv6Ct1ExeIvI2LV60MSVQKYRVsxV9Y=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-17T06:14:26.970Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900770794",
+      "name": "Tennou",
+      "encryptedCode": "U2FsdGVkX192i2HGydaxPdxnNl+wvBHnSnRkHJQjqdk=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-17T06:19:16.134Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900797431",
+      "name": "CMC Senn",
+      "encryptedCode": "U2FsdGVkX19HKkESU7OVF3VUSeT/X0UzOhDky4R1zCE=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-17T06:24:06.500Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900818187",
+      "name": "Matsuo",
+      "encryptedCode": "U2FsdGVkX1/g383i7UPphlqUxyoVF5p5GKPLw1A412U=",
+      "targetServer": "E-63",
+      "lastRun": "2025-12-17T06:28:56.618Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900847848",
+      "name": "Yatsu",
+      "encryptedCode": "U2FsdGVkX18VNaTalloqZ7cCioRWl+UuMtUnINd1UUc=",
+      "targetServer": "E-63",
+      "lastRun": "2025-12-17T06:33:47.789Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900867763",
+      "name": "Guin",
+      "encryptedCode": "U2FsdGVkX19ywxNf0SYPsSM8ePsdcKRKHepB+Tbemuo=",
+      "targetServer": "E-59",
+      "lastRun": "2025-12-17T06:38:39.175Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765900886975",
+      "name": "Numelgon",
+      "encryptedCode": "U2FsdGVkX18un/DmvkG6D9a7ABqnvJuy8psfclyyvn4=",
+      "targetServer": "E-58",
+      "lastRun": "2025-12-17T06:43:30.272Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765927550340",
+      "name": "mora",
+      "encryptedCode": "U2FsdGVkX1+eB3SYI6cQReeSqWHPVowQHy8bImRpNKM=",
+      "targetServer": "E-21",
+      "lastRun": "2025-12-17T07:04:56.204Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765930151939",
+      "name": "Senorr",
+      "encryptedCode": "U2FsdGVkX19fgXIY7GqJkkkjwjCXB1PrvZWCyMhn7KQ=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-17T07:09:46.617Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765932565211",
+      "name": "last",
+      "encryptedCode": "U2FsdGVkX19Bu8uf9DQVR7PBJPkrhRH0R2wJNT1EzaQ=",
+      "targetServer": "E-21",
+      "lastRun": "2025-12-17T07:14:37.065Z",
+      "status": "idle"
+    },
+    {
+      "id": "1765932604005",
+      "name": "lastone",
+      "encryptedCode": "U2FsdGVkX1/Sawk8+z6hdVBh1MireEbtBQdvA4j0kTU=",
+      "targetServer": "E-21",
+      "lastRun": "2025-12-17T07:19:30.262Z",
+      "status": "idle"
+    },
+    {
+      "id": "1766209569967",
+      "name": "Necroman",
+      "encryptedCode": "U2FsdGVkX19KWJbRJuWDMvqivSAzxPz+rZxzwep9KW8=",
+      "targetServer": "E-58",
+      "lastRun": "2025-12-20T07:32:02.803Z",
+      "status": "idle"
+    },
+    {
+      "id": "1766209603489",
+      "name": "Senoo v1",
+      "encryptedCode": "U2FsdGVkX19/Mp9mI69sc47vJDWUtsGW4y2sYtfRtOU=",
+      "targetServer": "E-58",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766209625438",
+      "name": "Kagerou",
+      "encryptedCode": "U2FsdGVkX1/v3RlyZp9QVVtqrB/RFXoXwVN/UbtmwO4=",
+      "targetServer": "E-58",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766209649459",
+      "name": "やしろ",
+      "encryptedCode": "U2FsdGVkX1+lw17STmmWETayvN1RU9hWWxjCKPBTcYI=",
+      "targetServer": "E-58",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766216360854",
+      "name": "Haru",
+      "encryptedCode": "U2FsdGVkX1+FZ9xE5Kl7FkiDZm84LXknfkSmEtKLEzs=",
+      "targetServer": "E-60",
+      "lastRun": "2025-12-20T07:44:15.177Z",
+      "status": "idle"
+    },
+    {
+      "id": "1766216457926",
+      "name": "Mecha",
+      "encryptedCode": "U2FsdGVkX1+vRTsdlr24tr2NndkVAdvQ+kq2XUOvy4U=",
+      "targetServer": "J-160",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766216491476",
+      "name": "Naofumi",
+      "encryptedCode": "U2FsdGVkX1/ifg9hvc2SHaBS7XsQY9cd7Y80gid1xR4=",
+      "targetServer": "E-46",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766216529995",
+      "name": "Decade",
+      "encryptedCode": "U2FsdGVkX18n6rpOjvUUjJqLK81wfLAabilc7ByXyuI=",
+      "targetServer": "E-48",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766216561350",
+      "name": "Koyomi",
+      "encryptedCode": "U2FsdGVkX1+77dC8lzyh1GwiuHTmH5COk+Qf7CW82Jk=",
+      "targetServer": "E-58",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766216589569",
+      "name": "Grand",
+      "encryptedCode": "U2FsdGVkX19kbQZ1ayVJBIgxA08LSP03IlUGWsgJXig=",
+      "targetServer": "E-57",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766216627710",
+      "name": "Alpha",
+      "encryptedCode": "U2FsdGVkX1/bGXmbX2OGdzYnikMBe9zfWgiOe4RWTVw=",
+      "targetServer": "E-59",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766216695600",
+      "name": "Geats",
+      "encryptedCode": "U2FsdGVkX1/s6IgqjWDVrml91pXsyAX+BpWuAM0NBVk=",
+      "targetServer": "E-26",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766226495457",
+      "name": "flutter",
+      "encryptedCode": "U2FsdGVkX195WJFWcVSj6x36wKV0k9v+KZI+N/1nQJQ=",
+      "targetServer": "E-56",
+      "lastRun": null,
+      "status": "error"
+    },
+    {
+      "id": "1766233519234",
+      "name": "ironthread",
+      "encryptedCode": "U2FsdGVkX18mX6Q5URCk5HZVuyeZOCI1XtZFI8/uDp4=",
+      "targetServer": "E-56",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766233572515",
+      "name": "gougingfire",
+      "encryptedCode": "U2FsdGVkX1/ORpacoAxqt3yn5eBCba44N0krqDn4M5E=",
+      "targetServer": "E56",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766233621229",
+      "name": "uknowJ",
+      "encryptedCode": "U2FsdGVkX18JuHj+KV3Y7WzemQdLn4m0MgOSpAWOJqs=",
+      "targetServer": "E-56",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766233658616",
+      "name": "ironvaliant",
+      "encryptedCode": "U2FsdGVkX18X8OnL5VOPput2gd6u3PCJRZ6v3j7/L4Q=",
+      "targetServer": "E-56",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766233704933",
+      "name": "unknowK",
+      "encryptedCode": "U2FsdGVkX19I5e+uzBSvLK37Mpr+MmYXq4aXjTEcy9I=",
+      "targetServer": "E-56",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766233758875",
+      "name": "jessie",
+      "encryptedCode": "U2FsdGVkX18219u8jzw3eziI7crUDoPx9MH3VmkyQ5E=",
+      "targetServer": "E-56",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766233790525",
+      "name": "unknowg",
+      "encryptedCode": "U2FsdGVkX19MrpbGO+z2voyMg4wyQTbEAJcYuk8rfJg=",
+      "targetServer": "E-56",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766233818699",
+      "name": "ironjugu",
+      "encryptedCode": "U2FsdGVkX1/CElPbX5FSs/yADTL3GrGxeG7KLEwNcxU=",
+      "targetServer": "E-56",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766233861749",
+      "name": "unknowi",
+      "encryptedCode": "U2FsdGVkX1+ac/iHwv2WGNar/7fOkqM2fAyfNOLtFIY=",
+      "targetServer": "e-56",
+      "lastRun": null,
+      "status": "idle"
+    },
+    {
+      "id": "1766233902249",
+      "name": "unknowh",
+      "encryptedCode": "U2FsdGVkX1+d1K8IoJFWvFsDwa5++LA79+hdszA5Kc4=",
+      "targetServer": "E-56",
+      "lastRun": null,
+      "status": "idle"
+    }
+  ],
+  "settings": {
+    "scheduleStart": "22:00",
+    "scheduleEnd": "18:00"
+  }
+}
