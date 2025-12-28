@@ -233,8 +233,18 @@ client.on('interactionCreate', async interaction => {
             await interaction.reply(message);
         }
         else if (commandName === 'force_run_all') {
-            await interaction.reply('🚀 Triggering a full check-and-run cycle for all accounts...');
-            checkAndRun().catch(err => console.error('[Discord] Force run all error:', err));
+            const result = await checkAndRun();
+            if (result && result.message === 'COOLDOWN') {
+                await interaction.reply({ content: `⏳ **Anti-Spam Active**: A batch started recently. Please wait **${result.remaining} minutes** before forcing another run.`, flags: MessageFlags.Ephemeral });
+            } else if (result && result.message === 'isRunning') {
+                await interaction.reply({ content: '⏸️ **Bot is busy**: A session is already running locally.', flags: MessageFlags.Ephemeral });
+            } else if (result && result.message === 'NONE_PENDING') {
+                await interaction.reply({ content: '✅ **Up to date**: No accounts are currently due for a run.', flags: MessageFlags.Ephemeral });
+            } else if (result && result.message === 'TIMEBOX') {
+                await interaction.reply({ content: '💤 **Outside Active Hours**: Bot is currently in its sleep window.', flags: MessageFlags.Ephemeral });
+            } else {
+                await interaction.reply('🚀 **Starting batch**: Checking for pending accounts now...');
+            }
         }
         else if (commandName === 'force_stop') {
             const { stopEverything } = await import('./manager.js');

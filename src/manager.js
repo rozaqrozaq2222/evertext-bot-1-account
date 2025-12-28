@@ -7,11 +7,12 @@ import { sendLog } from './bot.js';
 let isRunning = false; // Session Level Lock (Is a browser open?)
 let isProcessingBatch = false; // Batch Level Lock (Is the queue loop running?)
 let stopRequested = false;
+let lastBatchStartTime = 0;
 
 export const startScheduler = () => {
-    console.log('[Manager] Scheduler started. Checking every 20 minutes.');
-    // Run every 20 minutes
-    cron.schedule('*/20 * * * *', async () => {
+    console.log('[Manager] Scheduler started. Checking every 10 minutes.');
+    // Run every 10 minutes
+    cron.schedule('*/10 * * * *', async () => {
         await checkAndRun();
     });
 
@@ -177,7 +178,16 @@ export const checkAndRun = async () => {
 
     if (isRunning) {
         console.log('[Manager] A session is already running locally. Skipping check check.');
-        return;
+        return { success: false, message: 'isRunning' };
+    }
+
+    // 🛡️ Anti-Spam: Don't allow manual bypass if a batch ran recently (< 10 mins)
+    const nowCheck = Date.now();
+    const timeSinceLast = nowCheck - lastBatchStartTime;
+    if (timeSinceLast < 600000) { // 10 minutes
+        const remaining = Math.ceil((600000 - timeSinceLast) / 60000);
+        console.log(`[Manager] Batch started recently. Please wait ${remaining} more minutes.`);
+        return { success: false, message: 'COOLDOWN', remaining };
     }
 
     const { scheduleStart, scheduleEnd, pausedUntil } = await getSchedule();
@@ -214,7 +224,7 @@ export const checkAndRun = async () => {
 
     if (!isActiveTime) {
         console.log(`[Manager] Outside active hours (${scheduleStart}-${scheduleEnd}). Skipping.`);
-        return;
+        return { success: false, message: 'TIMEBOX' };
     }
 
     const accounts = await getAccounts();
@@ -261,10 +271,13 @@ export const checkAndRun = async () => {
 
     if (pendingAccounts.length === 0) {
         console.log('[Manager] All accounts completed or cooling down.');
-        return;
+        // Even if none run, we update start time to prevent manual spamming of the 'check'
+        lastBatchStartTime = Date.now();
+        return { success: false, message: 'NONE_PENDING' };
     }
 
     console.log(`[Manager] Found ${pendingAccounts.length} pending accounts. Attempting to run all...`);
+    lastBatchStartTime = Date.now();
 
     // Run all pending accounts using a Queue System
     isProcessingBatch = true;
