@@ -138,6 +138,10 @@ export const removeAccount = async (name) => {
   const initialLength = db.data.accounts.length;
   db.data.accounts = db.data.accounts.filter(a => a.name !== name);
   await db.write();
+
+  // Also remove from Handout List if present (Clean up residue)
+  await removeFromHandoutList(name);
+
   return db.data.accounts.length < initialLength;
 };
 
