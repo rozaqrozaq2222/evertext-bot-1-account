@@ -132,47 +132,21 @@ export const runSession = async (account, mode = 'daily') => {
             return { success: false, reason: 'BUSY' };
         }
 
+
         // Start terminal session
         console.log('▶️  Starting terminal session...');
-        await page.click('#startBtn');
+        try {
+            await page.waitForSelector('#startBtn', { visible: true, timeout: 60000 });
+            await page.click('#startBtn');
+        } catch (e) {
+            console.error('❌ Failed to find or click #startBtn. Page might be blank or different.');
+            throw new Error('Start Button not found');
+        }
+
         await page.waitForSelector('#connection_status', { timeout: 10000 });
 
-        // Check server status
-        const checkServerStatus = async (page) => {
-            console.log('🚧 DEV MODE: Bypassing server capacity check...');
-            return true;
-            /*
-                        try {
-                            const statusText = await page.evaluate(() => {
-                                const el = document.querySelector('span[style*="color:red"]');
-                                return el ? el.innerText : null;
-                            });
-                    
-                            if (statusText) {
-                                console.log(`📊 Server Status Check 1: ${statusText}`);
-                                if (statusText.includes('full')) return false;
-                            }
-                    
-                            const slotsText = await page.evaluate(() => {
-                                 // Example selector, might vary. 
-                                 // Logic in runner was checking specific text
-                                 return document.body.innerText;
-                            });
-                            
-                            // Simple check for "4/4" or similar indicating full
-                            // This is a naive check based on previous logs "4/4 slots used"
-                            if (slotsText.includes('4/4 slots used') || slotsText.includes('System full')) {
-                                 console.log('📊 Server Status Check 2: System seems full.');
-                                 return false;
-                            }
-                            
-                            return true;
-                        } catch (e) {
-                            console.log('Server check error', e);
-                            return true; // Assume up if check fails
-                        }
-                        */
-        };    // Optimized command sender - no redundant focus/clear operations
+
+        // Optimized command sender - no redundant focus/clear operations
         const send = async (cmd, delay = 500) => {
             await page.waitForSelector('#commandInput', { visible: true });
             await page.type('#commandInput', cmd, { delay: 50 }); // Simulate typing
@@ -340,7 +314,24 @@ export const runSession = async (account, mode = 'daily') => {
     } catch (error) {
         console.log('\n❌ ERROR OCCURRED\n💥 Error details:', error.message);
         console.log('='.repeat(60) + '\n');
-        // Do not close browser here, let finally handle it
+
+        // 🛠️ DEBUG: Save Snapshot of the page when error occurs
+        if (browser && (await browser.pages()).length > 0) {
+            try {
+                const pages = await browser.pages();
+                const errorPage = pages[0]; // Assuming first page is the one
+                if (errorPage) {
+                    const html = await errorPage.content();
+                    fs.writeFileSync('data/last_error_snapshot.html', html);
+                    console.log('📸 Saved error snapshot to data/last_error_snapshot.html');
+
+                    // Also screenshot if possible (optional, maybe overhead, stick to HTML for now)
+                }
+            } catch (snapErr) {
+                console.log('⚠️ Failed to save error snapshot:', snapErr.message);
+            }
+        }
+
         return { success: false, reason: error.message };
     } finally {
         if (browser) {
@@ -348,4 +339,5 @@ export const runSession = async (account, mode = 'daily') => {
             try { await browser.close(); } catch (e) { console.log('Close error:', e.message); }
         }
     }
+
 };

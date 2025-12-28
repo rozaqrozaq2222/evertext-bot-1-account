@@ -231,4 +231,18 @@ export const updateLastHandout = async (timestamp) => {
 // Run migration on module load to fix any existing plain-text codes
 await migrateUnencryptedCodes();
 
+
+export const resetAllStatus = async () => {
+  await db.read();
+  let count = 0;
+  for (const account of db.data.accounts) {
+    if (account.status !== 'idle') {
+      account.status = 'idle';
+      count++;
+    }
+  }
+  await db.write();
+  return count;
+};
+
 export { db };

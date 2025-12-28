@@ -57,7 +57,11 @@ const commands = [
     new SlashCommandBuilder()
         .setName('force_stop')
         .setDescription('Stop the current running session and clear queue'),
+    new SlashCommandBuilder()
+        .setName('reset_status')
+        .setDescription('Reset all account statuses to idle (Fixes stuck accounts)'),
 ];
+
 
 client.once(Events.ClientReady, async () => {
     console.log(`[Discord] Logged in as ${client.user.tag}`);
@@ -254,6 +258,11 @@ client.on('interactionCreate', async interaction => {
             const { stopEverything } = await import('./manager.js');
             await stopEverything();
             await interaction.reply('🛑 **Force Stop Triggered!** Current batch cleared and bot paused for 1 hour to prevent immediate restart.');
+        }
+        else if (commandName === 'reset_status') {
+            const { resetAllStatus } = await import('./db.js');
+            const count = await resetAllStatus();
+            await interaction.reply({ content: `✅ **Status Reset**: Reset ${count} account(s) to 'idle' status.` });
         }
     } catch (error) {
         console.error('[Discord] Interaction Error:', error);
