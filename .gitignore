@@ -7,8 +7,8 @@ yarn.lock
 .env
 
 # Database
-# Database
 # data/db.json (Tracked in git for initial setup, but should be mounted as volume in prod)
+data/last_error_snapshot.html
 
 # Logs
 *.log
