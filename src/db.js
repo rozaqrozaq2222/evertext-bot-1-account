@@ -33,6 +33,7 @@ try {
 // MIGRATION / INITIALIZATION LOGIC
 // Check if the Persistent DB exists. If not, try to seed it from the deployed 'initial_db.json'
 const DB_PATH = 'data/db.json';
+const HANDOUT_LIST_PATH = 'data/handout_list.json';
 const SEED_PATH = 'initial_db.json';
 
 let initialData = { accounts: [], settings: { scheduleStart: '22:00', scheduleEnd: '18:00' } };
@@ -52,6 +53,7 @@ if (fs.existsSync(SEED_PATH)) {
 
 // LowDB Setup
 const db = await JSONFilePreset(DB_PATH, initialData);
+const hoDb = await JSONFilePreset(HANDOUT_LIST_PATH, { list: [], lastHandout: null });
 
 // Check if we just initialized a fresh DB (empty accounts but we have seed data)
 // Note: JSONFilePreset writes defaultData if file doesn't exist. 
@@ -188,6 +190,38 @@ export const resumeBot = async () => {
   const current = db.data.settings || {};
   db.data.settings = { ...current, pausedUntil: null };
   await db.write();
+};
+
+export const getHandoutList = async () => {
+  await hoDb.read();
+  return hoDb.data; // This now returns { list: [], lastHandout: ... }
+};
+
+export const addToHandoutList = async (accountName) => {
+  await hoDb.read();
+  if (!hoDb.data.list.includes(accountName)) {
+    hoDb.data.list.push(accountName);
+    await hoDb.write();
+    return true;
+  }
+  return false;
+};
+
+export const removeFromHandoutList = async (accountName) => {
+  await hoDb.read();
+  const index = hoDb.data.list.indexOf(accountName);
+  if (index > -1) {
+    hoDb.data.list.splice(index, 1);
+    await hoDb.write();
+    return true;
+  }
+  return false;
+};
+
+export const updateLastHandout = async (timestamp) => {
+  await hoDb.read();
+  hoDb.data.lastHandout = timestamp;
+  await hoDb.write();
 };
 
 // Run migration on module load to fix any existing plain-text codes

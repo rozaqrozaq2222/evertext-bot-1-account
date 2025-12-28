@@ -1,6 +1,6 @@
 import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder, EmbedBuilder, MessageFlags } from 'discord.js';
 import dotenv from 'dotenv';
-import { addAccount, getAccounts, removeAccount, encrypt, setSchedule, pauseBot, resumeBot } from './db.js';
+import { addAccount, getAccounts, removeAccount, encrypt, setSchedule, pauseBot, resumeBot, addToHandoutList, removeFromHandoutList, getHandoutList } from './db.js';
 import { executeSession } from './manager.js';
 
 dotenv.config();
@@ -40,6 +40,17 @@ const commands = [
     new SlashCommandBuilder()
         .setName('export_db')
         .setDescription('Download the current database file'),
+    new SlashCommandBuilder()
+        .setName('ho_add')
+        .setDescription('Add account to Handout (HO) List')
+        .addStringOption(option => option.setName('name').setDescription('Account Name').setRequired(true)),
+    new SlashCommandBuilder()
+        .setName('ho_remove')
+        .setDescription('Remove account from Handout (HO) List')
+        .addStringOption(option => option.setName('name').setDescription('Account Name').setRequired(true)),
+    new SlashCommandBuilder()
+        .setName('ho_list')
+        .setDescription('Show Handout (HO) List'),
 ];
 
 client.once('ready', async () => {
@@ -164,6 +175,46 @@ client.on('interactionCreate', async interaction => {
         }
         else if (commandName === 'export_db') {
             await interaction.reply({ content: '📤 Uploading database file...', files: ['./data/db.json'] });
+        }
+        else if (commandName === 'ho_add') {
+            const name = interaction.options.getString('name');
+            const accounts = await getAccounts();
+            const exists = accounts.find(a => a.name === name);
+
+            if (!exists) {
+                await interaction.reply({ content: `⚠️ Account **${name}** not found in database. Add it first!`, flags: MessageFlags.Ephemeral });
+                return;
+            }
+
+            const added = await addToHandoutList(name);
+            if (added) {
+                await interaction.reply(`✅ Added **${name}** to Handout (HO) List.`);
+            } else {
+                await interaction.reply(`ℹ️ **${name}** is already in the list.`);
+            }
+        }
+        else if (commandName === 'ho_remove') {
+            const name = interaction.options.getString('name');
+            const removed = await removeFromHandoutList(name);
+            if (removed) {
+                await interaction.reply(`✅ Removed **${name}** from Handout (HO) List.`);
+            } else {
+                await interaction.reply(`ℹ️ **${name}** was not in the list.`);
+            }
+        }
+        else if (commandName === 'ho_list') {
+            const hoData = await getHandoutList();
+            const list = hoData.list || [];
+            const lastHO = hoData.lastHandout;
+
+            let message = `📜 **Handout (HO) List**:\n${list.join(', ') || 'None'}`;
+            if (lastHO) {
+                message += `\n\n🕒 **Last Routine Run**: ${new Date(lastHO).toLocaleString()}`;
+            } else {
+                message += `\n\n🕒 **Last Routine Run**: Never`;
+            }
+
+            await interaction.reply(message);
         }
     } catch (error) {
         console.error('[Discord] Interaction Error:', error);

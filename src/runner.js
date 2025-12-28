@@ -4,7 +4,7 @@ import fs from 'fs';
 const GAME_URL = 'https://evertext.sytes.net/';
 const BLOCKED_DOMAINS = ['google-analytics.com', 'googletagmanager.com', 'facebook.net'];
 
-export const runSession = async (account) => {
+export const runSession = async (account, mode = 'daily') => {
     let browser;
     try {
         // Determine executable path based on OS
@@ -314,7 +314,14 @@ export const runSession = async (account) => {
         // We wait blindly as per "Better Flow" reference
         await new Promise(r => setTimeout(r, 200000));
 
-        const commands = ["y", "auto", "y", "quit", "y"];
+        console.log(`\n🚀 Step 4: Executing cleanup command sequence (Mode: ${mode})...`);
+
+        let commands;
+        if (mode === 'handout') {
+            commands = ["ho", "quit", "y"];
+        } else {
+            commands = ["y", "auto", "y", "quit", "y"];
+        }
 
         for (const cmd of commands) {
             console.log(`📤 Sending: ${cmd}`);

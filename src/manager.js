@@ -1,5 +1,5 @@
 import cron from 'node-cron';
-import { getAccounts, updateAccountStatus, getAccountDecrypted, getSchedule } from './db.js';
+import { getAccounts, updateAccountStatus, getAccountDecrypted, getSchedule, getHandoutList, updateLastHandout } from './db.js';
 import { runSession } from './runner.js';
 import { sendLog } from './bot.js';
 
@@ -13,9 +13,50 @@ export const startScheduler = () => {
     cron.schedule('*/10 * * * *', async () => {
         await checkAndRun();
     });
+
+    // Handout Routine at 11:05 UTC (18:05 UTC+7)
+    cron.schedule('5 11 * * *', async () => {
+        console.log('[Manager] Triggering Handout (HO) Routine...');
+        await runHandoutRoutine();
+    });
 };
 
+const runHandoutRoutine = async () => {
+    const hoData = await getHandoutList();
+    const hoList = hoData.list || [];
 
+    if (hoList.length === 0) {
+        console.log('[Manager] Handout list empty. Skipping.');
+        return;
+    }
+
+    console.log(`[Manager] Starting Handout Routine for ${hoList.length} accounts: ${hoList.join(', ')}`);
+    await sendLog(`🎁 **Starting Handout Routine** for: ${hoList.join(', ')}`, 'start');
+
+    const accounts = await getAccounts();
+
+    // Filter only accounts in the HO list
+    const targetAccounts = accounts.filter(a => hoList.includes(a.name));
+
+    // Execute sequentially
+    for (const account of targetAccounts) {
+        console.log(`[Manager] Handout: Processing ${account.name}...`);
+        const result = await executeSession(account.id, false, 'handout');
+
+        if (result.success) {
+            await sendLog(`✅ Handout done for **${account.name}**`, 'success');
+        } else {
+            await sendLog(`❌ Handout failed for **${account.name}**: ${result.message}`, 'error');
+        }
+
+        // Small delay
+        await new Promise(r => setTimeout(r, 5000));
+    }
+
+    const finishTime = new Date().toISOString();
+    await updateLastHandout(finishTime);
+    await sendLog(`🎁 **Handout Routine Completed** at ${new Date(finishTime).toLocaleString()}`, 'info');
+};
 
 const generateDailyReport = async () => {
     const accounts = await getAccounts();
@@ -303,7 +344,7 @@ export const checkAndRun = async () => {
     }
 };
 
-export const executeSession = async (accountId, isAuto = false) => {
+export const executeSession = async (accountId, isAuto = false, mode = 'daily') => {
     // Note: We don't check 'isRunning' here strictly if we want to allow the loop in checkAndRun to call this.
     // But we should set isRunning = true during the actual runSession to prevent *other* triggers.
     // Since checkAndRun awaits this, it's fine.
@@ -342,7 +383,7 @@ export const executeSession = async (accountId, isAuto = false) => {
         await sendLog(`▶️ Starting session for **${account.name}**...`, 'start');
         await updateAccountStatus(account.id, 'running');
 
-        const result = await runSession(account);
+        const result = await runSession(account, mode);
 
         if (result.success) {
             console.log(`[Manager] Session for ${account.name} completed successfully.`);
