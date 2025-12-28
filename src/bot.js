@@ -1,7 +1,7 @@
 import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder, EmbedBuilder, MessageFlags, Events } from 'discord.js';
 import dotenv from 'dotenv';
 import { addAccount, getAccounts, removeAccount, encrypt, setSchedule, pauseBot, resumeBot, addToHandoutList, removeFromHandoutList, getHandoutList } from './db.js';
-import { executeSession } from './manager.js';
+import { executeSession, checkAndRun } from './manager.js';
 
 dotenv.config();
 
@@ -51,6 +51,12 @@ const commands = [
     new SlashCommandBuilder()
         .setName('ho_list')
         .setDescription('Show Handout (HO) List'),
+    new SlashCommandBuilder()
+        .setName('force_run_all')
+        .setDescription('Force run all pending accounts immediately'),
+    new SlashCommandBuilder()
+        .setName('force_stop')
+        .setDescription('Stop the current running session and clear queue'),
 ];
 
 client.once(Events.ClientReady, async () => {
@@ -225,6 +231,15 @@ client.on('interactionCreate', async interaction => {
             }
 
             await interaction.reply(message);
+        }
+        else if (commandName === 'force_run_all') {
+            await interaction.reply('🚀 Triggering a full check-and-run cycle for all accounts...');
+            checkAndRun().catch(err => console.error('[Discord] Force run all error:', err));
+        }
+        else if (commandName === 'force_stop') {
+            const { stopEverything } = await import('./manager.js');
+            await stopEverything();
+            await interaction.reply('🛑 **Force Stop Triggered!** Current batch cleared and bot paused for 1 hour to prevent immediate restart.');
         }
     } catch (error) {
         console.error('[Discord] Interaction Error:', error);

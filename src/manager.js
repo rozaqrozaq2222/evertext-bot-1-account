@@ -1,11 +1,12 @@
 import cron from 'node-cron';
-import { getAccounts, updateAccountStatus, getAccountDecrypted, getSchedule, getHandoutList, updateLastHandout } from './db.js';
+import { getAccounts, updateAccountStatus, getAccountDecrypted, getSchedule, getHandoutList, updateLastHandout, pauseBot } from './db.js';
 import { runSession } from './runner.js';
 import { sendLog } from './bot.js';
 
 
 let isRunning = false; // Session Level Lock (Is a browser open?)
 let isProcessingBatch = false; // Batch Level Lock (Is the queue loop running?)
+let stopRequested = false;
 
 export const startScheduler = () => {
     console.log('[Manager] Scheduler started. Checking every 10 minutes.');
@@ -172,6 +173,8 @@ export const checkAndRun = async () => {
         return;
     }
 
+    stopRequested = false; // Reset stop flag on new run
+
     if (isRunning) {
         console.log('[Manager] A session is already running locally. Skipping check check.');
         return;
@@ -297,6 +300,11 @@ export const checkAndRun = async () => {
 
             console.log(`[Manager] Queue: Processing ${account.name}... (${queue.length} pending)`);
 
+            if (stopRequested) {
+                console.log('[Manager] Stop requested. Aborting queue.');
+                break;
+            }
+
             // Execute Session
             const result = await executeSession(account.id, true);
 
@@ -420,4 +428,15 @@ export const executeSession = async (accountId, isAuto = false, mode = 'daily') 
     } finally {
         isRunning = false;
     }
+};
+
+export const stopEverything = async () => {
+    console.log('[Manager] 🛑 Force stop requested by user.');
+    stopRequested = true;
+
+    // Pause bot settings to prevent immediate re-trigger by cron
+    await pauseBot(1); // 1 hour pause
+
+    // Note: We can't easily kill the current Puppeteer instance from here 
+    // without a global reference, but this will stop the next accounts in the queue.
 };
