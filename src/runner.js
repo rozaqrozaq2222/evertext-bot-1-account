@@ -117,15 +117,21 @@ export const runSession = async (account, mode = 'daily') => {
 
                 console.log(`📊 Server Status Check ${retries + 1}: ${activeUsers}/${maxUsers} slots used`);
                 if (maxUsers > 0) break;
-            } catch (e) {
-                console.log(`⚠️ Error reading user counts (Attempt ${retries + 1}): ${e.message}`);
-            }
+            } catch (e) { /* ignore */ }
             await new Promise(r => setTimeout(r, 1000));
             retries++;
         }
 
         if (maxUsers === 0) {
-            console.log('⚠️ Could not retrieve valid server capacity data. Proceeding anyway.');
+            console.log('⚠️ Could not retrieve valid server capacity data (0/0).');
+            const currentUrl = page.url();
+            const bodyPreview = await page.evaluate(() => document.body.innerText.substring(0, 300).replace(/\n/g, ' '));
+            console.log(`📍 Current URL: ${currentUrl}`);
+            console.log(`📄 Page Preview: ${bodyPreview}...`);
+
+            if (currentUrl.includes('discord.com') || bodyPreview.toLowerCase().includes('login')) {
+                console.log('❌ SESSION EXPIRED: Bot is stuck on a login or auth page. Please refresh cookies.json');
+            }
         } else if (activeUsers >= maxUsers) {
             console.log('❌ System full. Aborting session.');
             await browser.close();
@@ -139,8 +145,16 @@ export const runSession = async (account, mode = 'daily') => {
             await page.waitForSelector('#startBtn', { visible: true, timeout: 60000 });
             await page.click('#startBtn');
         } catch (e) {
-            console.error('❌ Failed to find or click #startBtn. Page might be blank or different.');
-            throw new Error('Start Button not found');
+            console.error('❌ Failed to find or click #startBtn.');
+            const currentUrl = page.url();
+            const bodyPreview = await page.evaluate(() => document.body.innerText.substring(0, 300).replace(/\n/g, ' '));
+            console.log(`📍 Current URL: ${currentUrl}`);
+            console.log(`📄 Page Preview: ${bodyPreview}...`);
+
+            if (currentUrl.includes('discord.com') || bodyPreview.toLowerCase().includes('login')) {
+                throw new Error('Session Expired (Stuck on Login Page)');
+            }
+            throw new Error('Start Button not found - check snapshot for details');
         }
 
         await page.waitForSelector('#connection_status', { timeout: 10000 });

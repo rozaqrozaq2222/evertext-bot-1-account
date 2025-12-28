@@ -282,15 +282,20 @@ export const checkAndRun = async () => {
     // Run all pending accounts using a Queue System
     isProcessingBatch = true;
     const queue = [...pendingAccounts];
+    let consecutiveFailures = 0;
 
     try {
         while (queue.length > 0) {
-            // Double check if we are still within hours? (Optional, but good practice)
-            // Recalculate current hour for accurate check
+            if (consecutiveFailures >= 3) {
+                console.log('[Manager] 🛡️ Circuit Breaker: 3 consecutive failures detected. Stopping batch to avoid spamming/detection.');
+                await sendLog('🛑 **Circuit Breaker Active**: 3 consecutive failures (likely expired cookies or server change). Stopping batch.', 'error');
+                break;
+            }
+
+            // Double check if we are still within hours
             const currentUtcHour = (new Date().getUTCHours() + 7) % 24;
 
             let shouldStop = false;
-            // ... (rest of logic remains, simplifying checks for brevity in reading thoughts, but strictly keeping same structure)
             if (startHour < endHour) {
                 if (currentUtcHour >= endHour) shouldStop = true;
             } else {
@@ -304,11 +309,11 @@ export const checkAndRun = async () => {
 
             const account = queue.shift(); // Take from front
 
-            // 🛠️ FIX: Check Pause Status AGAIN before every account run
+            // Check Pause Status
             const currentSchedule = await getSchedule();
             if (currentSchedule.pausedUntil && new Date() < new Date(currentSchedule.pausedUntil)) {
                 console.log(`[Manager] Pause command detected during batch. Stopping execution.`);
-                break; // Stop the loop
+                break;
             }
 
             console.log(`[Manager] Queue: Processing ${account.name}... (${queue.length} pending)`);
@@ -321,16 +326,14 @@ export const checkAndRun = async () => {
             // Execute Session
             const result = await executeSession(account.id, true);
 
-            // Handle Retry Logic (Re-queueing)
-            // Note: The original retry logic modified 'queue' which is local.
-            // Since we passed account object ref, we can push it back.
-
             if (!result.success) {
+                consecutiveFailures++;
                 if (result.message === 'BUSY') {
                     console.log(`[Manager] Server FULL for ${account.name}. Waiting 10 mins (600s) and retrying immediately...`);
                     await sendLog(`⚠️ Server FULL. Waiting 10 mins and retrying **${account.name}**...`, 'warn');
                     await new Promise(r => setTimeout(r, 600000));
                     queue.unshift(account);
+                    consecutiveFailures = 0; // Reset on BUSY since it's server-side
                 }
                 else if (result.message && (result.message.includes('Zigza') || result.message.includes('Invalid restore code'))) {
                     console.log(`[Manager] Zigza/Error on ${account.name}. Waiting 15 mins and pushing to end of queue.`);
@@ -345,17 +348,15 @@ export const checkAndRun = async () => {
                     queue.push(account);
                 }
                 else {
-                    console.log(`[Manager] Failed ${account.name} with ${result.message}.`);
+                    console.log(`[Manager] Failed ${account.name} with ${result.message}. Waiting 2 mins before next.`);
                     await sendLog(`❌ Failed **${account.name}**: ${result.message}`, 'error');
+                    await new Promise(r => setTimeout(r, 120000)); // Mandatory 2m delay on generic failure
                 }
             } else {
-                // Success handling handled in executeSession
-            }
-
-            // 🕒 Anti-Spam: Increased delay between successful accounts
-            if (result.success) {
-                console.log('[Manager] Success. Waiting 60 seconds before next account to avoid spam detection...');
-                await new Promise(r => setTimeout(r, 60000));
+                consecutiveFailures = 0;
+                // 🕒 Anti-Spam: Increased delay between successful accounts
+                console.log('[Manager] Success. Waiting 2 minutes (120s) before next account to avoid spam detection...');
+                await new Promise(r => setTimeout(r, 120000));
             }
         }
     } catch (err) {
