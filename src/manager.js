@@ -9,9 +9,9 @@ let isProcessingBatch = false; // Batch Level Lock (Is the queue loop running?)
 let stopRequested = false;
 
 export const startScheduler = () => {
-    console.log('[Manager] Scheduler started. Checking every 10 minutes.');
-    // Run every 10 minutes
-    cron.schedule('*/10 * * * *', async () => {
+    console.log('[Manager] Scheduler started. Checking every 20 minutes.');
+    // Run every 20 minutes
+    cron.schedule('*/20 * * * *', async () => {
         await checkAndRun();
     });
 
@@ -314,21 +314,21 @@ export const checkAndRun = async () => {
 
             if (!result.success) {
                 if (result.message === 'BUSY') {
-                    console.log(`[Manager] Server FULL for ${account.name}. Waiting 5 mins (300s) and retrying immediately...`);
-                    await sendLog(`⚠️ Server FULL. Waiting 5 mins and retrying **${account.name}**...`, 'warn');
-                    await new Promise(r => setTimeout(r, 300000));
+                    console.log(`[Manager] Server FULL for ${account.name}. Waiting 10 mins (600s) and retrying immediately...`);
+                    await sendLog(`⚠️ Server FULL. Waiting 10 mins and retrying **${account.name}**...`, 'warn');
+                    await new Promise(r => setTimeout(r, 600000));
                     queue.unshift(account);
                 }
                 else if (result.message && (result.message.includes('Zigza') || result.message.includes('Invalid restore code'))) {
-                    console.log(`[Manager] Zigza/Error on ${account.name}. Waiting 6 mins and pushing to end of queue.`);
-                    await sendLog(`⚠️ Zigza/Error on **${account.name}**. Cooling down 6m...`, 'error');
-                    await new Promise(r => setTimeout(r, 360000));
+                    console.log(`[Manager] Zigza/Error on ${account.name}. Waiting 15 mins and pushing to end of queue.`);
+                    await sendLog(`⚠️ Zigza/Error on **${account.name}**. Cooling down 15m...`, 'error');
+                    await new Promise(r => setTimeout(r, 900000));
                     queue.push(account); // Push to back
                 }
                 else if (result.message && (result.message.includes('Timeout') || result.message.includes('Waiting failed'))) {
-                    console.log(`[Manager] Timeout/Wait failed for ${account.name}. Waiting 60s and pushing to end of queue.`);
-                    await sendLog(`⚠️ Timeout on **${account.name}**. Retrying in 60s...`, 'warn');
-                    await new Promise(r => setTimeout(r, 60000));
+                    console.log(`[Manager] Timeout/Wait failed for ${account.name}. Waiting 5 mins and pushing to end of queue.`);
+                    await sendLog(`⚠️ Timeout on **${account.name}**. Retrying in 5 mins...`, 'warn');
+                    await new Promise(r => setTimeout(r, 300000));
                     queue.push(account);
                 }
                 else {
@@ -339,9 +339,10 @@ export const checkAndRun = async () => {
                 // Success handling handled in executeSession
             }
 
-            // Small delay between successful accounts
+            // 🕒 Anti-Spam: Increased delay between successful accounts
             if (result.success) {
-                await new Promise(r => setTimeout(r, 5000));
+                console.log('[Manager] Success. Waiting 60 seconds before next account to avoid spam detection...');
+                await new Promise(r => setTimeout(r, 60000));
             }
         }
     } catch (err) {
