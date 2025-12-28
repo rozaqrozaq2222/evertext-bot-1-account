@@ -10,6 +10,7 @@ const GAME_URL = 'https://evertext.sytes.net/';
 
     const browser = await puppeteer.launch({
         headless: false,
+        executablePath: 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
         defaultViewport: null
     });
@@ -21,10 +22,12 @@ const GAME_URL = 'https://evertext.sytes.net/';
     try {
         await page.goto(GAME_URL, { waitUntil: 'networkidle2' });
 
-        console.log('⏳ Waiting for you to reach the main game screen...');
-        console.log('👉 Login with Discord. If stuck on "redirecting", just wait.');
-        console.log('🛑 WHEN YOU ARE SUCCESFULLY LOGGED IN and see the game/terminal:');
-        console.log('⌨️  Press [ENTER] in this terminal to save cookies and close.');
+        console.log('\n⏳ Waiting for you to reach the main game screen...');
+        console.log('👉 Step 1: Click "Login with Discord" in Chrome.');
+        console.log('👉 Step 2: Authorize/Login in the Discord window.');
+        console.log('👉 Step 3: Wait until you see the Black Terminal or Game UI.');
+        console.log('\n🛑 WHEN LOGGED IN:');
+        console.log('⌨️  Press [ENTER] in this terminal (PowerShell) to save cookies and close.');
 
         // Wait for manual user confirmation
         const readline = (await import('readline')).createInterface({
@@ -35,15 +38,22 @@ const GAME_URL = 'https://evertext.sytes.net/';
         await new Promise(resolve => readline.question('', resolve));
         readline.close();
 
-        console.log('✅ Game screen detected! Waiting 3 seconds to ensure cookies settle...');
+        console.log('✅ Finalizing... Waiting 3 seconds to ensure cookies settle...');
         await new Promise(r => setTimeout(r, 3000));
 
         // Get cookies
         const cookies = await page.cookies();
+
+        // Ensure data directory exists
+        if (!fs.existsSync('./data')) {
+            fs.mkdirSync('./data');
+        }
+
         fs.writeFileSync('./data/cookies.json', JSON.stringify(cookies, null, 2));
 
-        console.log(`💾 Saved ${cookies.length} cookies to data/cookies.json`);
-        console.log('🎉 Cookies refreshed. Please push this file to GitHub now.');
+        console.log(`\n💾 SUCCESS! Saved ${cookies.length} cookies to data/cookies.json`);
+        console.log('🎉 Your bot is now ready to log in.');
+        console.log('🚀 You can now close this and start the bot or push the changes.');
 
     } catch (e) {
         console.error('❌ Error:', e);

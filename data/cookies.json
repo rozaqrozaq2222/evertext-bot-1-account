@@ -1,0 +1,16 @@
+[
+  {
+    "name": "session",
+    "value": ".eJw9kNtOwkAURf-lz9bMmZkzF9_EJqhYCAIqT2QuZxCUVlsuEuO_WyXhfa-9V_Z3tkgNta_Z1bbZ0UW2WMXsKmPWA0RLRnuFxhHGAB7Jx5iCJmWD0RIsl8SY8GiTJM8FkzyZCBxk8MYygaCTSEID00JxBw4dIjLOvfZOI2mPUZE3USG3iZRikJwiTqCyTuSDmo2rqNqe1XYtNSc_bUFxbSWzXCuBEv8IFwK17WJbv1HVZcrpmI2Ku2O5Lo_D4vo4KuaHUTET5eFSysnj-0uvWE4Haz-ZPw0-97LXm9SzqJ7Hw66qof9Tzl2mz1blTb2hPeDG8Yfb-74a9vkax_5LLTug7ZZXdXWyA2sFaEi5c9HkEoPNPQWViwRkk5fWccx-fgGdDm-9.aVEeKA.JZZfBgMkrNfkmJht_tmWPRSs6CQ",
+    "domain": "evertext.sytes.net",
+    "path": "/",
+    "expires": 1767010224.196901,
+    "size": 435,
+    "httpOnly": true,
+    "secure": false,
+    "session": false,
+    "priority": "Medium",
+    "sameParty": false,
+    "sourceScheme": "Secure"
+  }
+]
