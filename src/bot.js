@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder, EmbedBuilder, MessageFlags } from 'discord.js';
+import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder, EmbedBuilder, MessageFlags, Events } from 'discord.js';
 import dotenv from 'dotenv';
 import { addAccount, getAccounts, removeAccount, encrypt, setSchedule, pauseBot, resumeBot, addToHandoutList, removeFromHandoutList, getHandoutList } from './db.js';
 import { executeSession } from './manager.js';
@@ -53,22 +53,32 @@ const commands = [
         .setDescription('Show Handout (HO) List'),
 ];
 
-client.once('ready', async () => {
+client.once(Events.ClientReady, async () => {
     console.log(`[Discord] Logged in as ${client.user.tag}`);
 
     const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
     try {
         console.log('[Discord] Refreshing application (/) commands.');
         // If GUILD_ID is set and not the placeholder, register to guild
-        if (process.env.GUILD_ID && process.env.GUILD_ID !== 'your_guild_id_here') {
-            await rest.put(Routes.applicationGuildCommands(client.user.id, process.env.GUILD_ID), { body: commands });
+        if (process.env.GUILD_ID && process.env.GUILD_ID !== 'your_guild_id_here' && process.env.GUILD_ID.trim() !== '') {
+            try {
+                console.log(`[Discord] Registering commands for Guild: ${process.env.GUILD_ID}`);
+                await rest.put(Routes.applicationGuildCommands(client.user.id, process.env.GUILD_ID), { body: commands });
+            } catch (guildError) {
+                if (guildError.code === 50001) {
+                    console.error(`[Discord] ⚠️ Missing Access for Guild ${process.env.GUILD_ID}. Falling back to global registration...`);
+                    await rest.put(Routes.applicationCommands(client.user.id), { body: commands });
+                } else {
+                    throw guildError;
+                }
+            }
         } else {
             console.log('[Discord] Registering global commands (this may take a while to update)...');
             await rest.put(Routes.applicationCommands(client.user.id), { body: commands });
         }
         console.log('[Discord] Successfully reloaded application (/) commands.');
     } catch (error) {
-        console.error(error);
+        console.error('[Discord] Critical error during command registration:', error);
     }
 });
 
