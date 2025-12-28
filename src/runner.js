@@ -4,7 +4,7 @@ import fs from 'fs';
 const GAME_URL = 'https://evertext.sytes.net/';
 const BLOCKED_DOMAINS = ['google-analytics.com', 'googletagmanager.com', 'facebook.net'];
 
-export const runSession = async (account, mode = 'daily') => {
+export const runSession = async (account) => {
     let browser;
     try {
         // Determine executable path based on OS
@@ -97,33 +97,7 @@ export const runSession = async (account, mode = 'daily') => {
                 await page.setCookie(...cookies);
                 console.log('🍪 Loaded session cookies from cookies.json.');
             } else {
-                // Try to load from DB settings
-                const { getSchedule } = await import('./db.js');
-                const settings = await getSchedule();
-                if (settings.cookies) {
-                    console.log('🍪 Loading session cookies from DB settings...');
-                    // Settings.cookies might be a string or a JSON array
-                    let cookieData;
-                    try {
-                        cookieData = JSON.parse(settings.cookies);
-                    } catch (e) {
-                        // If not JSON, it might be a raw cookie string (less likely for puppeteer)
-                        // But we can try to wrap it if it looks like a single cookie
-                        cookieData = [{
-                            name: 'session', // common fallback
-                            value: settings.cookies,
-                            domain: 'evertext.sytes.net'
-                        }];
-                    }
-
-                    if (Array.isArray(cookieData)) {
-                        await page.setCookie(...cookieData);
-                    } else {
-                        await page.setCookie(cookieData);
-                    }
-                } else {
-                    console.log('⚠️ No cookies found. Bot may get stuck at login.');
-                }
+                console.log('⚠️ No cookies found. Bot may get stuck at login.');
             }
         } catch (error) {
             console.log('⚠️ Failed to load cookies:', error.message);
@@ -340,17 +314,7 @@ export const runSession = async (account, mode = 'daily') => {
         // We wait blindly as per "Better Flow" reference
         await new Promise(r => setTimeout(r, 200000));
 
-        // Step 4: Rapid Fire Commands
-        // Reference: ["y", "auto", "y", "quit", "y"]
-        // If mode is 'handout', we do: ["ho", "quit", "y"]
-        console.log(`\n🚀 Step 4: Executing cleanup command sequence (Mode: ${mode})...`);
-
-        let commands;
-        if (mode === 'handout') {
-            commands = ["ho", "quit", "y"];
-        } else {
-            commands = ["y", "auto", "y", "quit", "y"];
-        }
+        const commands = ["y", "auto", "y", "quit", "y"];
 
         for (const cmd of commands) {
             console.log(`📤 Sending: ${cmd}`);

@@ -1,5 +1,5 @@
 import cron from 'node-cron';
-import { getAccounts, updateAccountStatus, getAccountDecrypted, getSchedule, getHandoutList } from './db.js';
+import { getAccounts, updateAccountStatus, getAccountDecrypted, getSchedule } from './db.js';
 import { runSession } from './runner.js';
 import { sendLog } from './bot.js';
 
@@ -13,62 +13,9 @@ export const startScheduler = () => {
     cron.schedule('*/10 * * * *', async () => {
         await checkAndRun();
     });
-
-    // Handout Routine at 11:05 UTC (18:05 UTC+7)
-    // We check every 10 minutes, so we can just check if current hour is 11 and minute < 15?
-    // Better: specific cron for it.
-    cron.schedule('5 11 * * *', async () => {
-        console.log('[Manager] Triggering Handout (HO) Routine...');
-        await runHandoutRoutine();
-    });
 };
 
-const runHandoutRoutine = async () => {
-    const hoList = await getHandoutList();
-    if (hoList.length === 0) {
-        console.log('[Manager] Handout list empty. Skipping.');
-        return;
-    }
 
-    console.log(`[Manager] Starting Handout Routine for ${hoList.length} accounts: ${hoList.join(', ')}`);
-    await sendLog(`🎁 **Starting Handout Routine** for: ${hoList.join(', ')}`, 'start');
-
-    const accounts = await getAccounts();
-
-    // Filter only accounts in the HO list
-    const targetAccounts = accounts.filter(a => hoList.includes(a.name));
-
-    // Check for missing accounts
-    if (targetAccounts.length !== hoList.length) {
-        console.log('[Manager] Warning: Some accounts in HO list not found in DB.');
-    }
-
-    // Queue them up
-    // We reuse the same Locking mechanism via executeSession, but we must be careful not to conflict with daily runs.
-    // At 18:05, daily runs should be sleeping (End=18:00). So it's safe.
-
-    // Execute sequentially
-    for (const account of targetAccounts) {
-        console.log(`[Manager] Handout: Processing ${account.name}...`);
-        // We pass 'handout' mode.
-        // We ignore 'isRunning' check inside executeSession? No, we respect it.
-        // If daily is somehow running (overtime), this will fail/skip.
-        // That's fine.
-
-        const result = await executeSession(account.id, false, 'handout');
-
-        if (result.success) {
-            await sendLog(`✅ Handout done for **${account.name}**`, 'success');
-        } else {
-            await sendLog(`❌ Handout failed for **${account.name}**: ${result.message}`, 'error');
-        }
-
-        // Small delay
-        await new Promise(r => setTimeout(r, 5000));
-    }
-
-    await sendLog('🎁 **Handout Routine Completed**', 'info');
-};
 
 const generateDailyReport = async () => {
     const accounts = await getAccounts();
@@ -343,10 +290,9 @@ export const checkAndRun = async () => {
                 // Success handling handled in executeSession
             }
 
-            // ⚠️ STABILITY UPDATE: Wait 10 minutes between accounts
+            // Small delay between successful accounts
             if (result.success) {
-                console.log(`[Manager] Session success. Waiting 10 minutes before next account...`);
-                await new Promise(r => setTimeout(r, 600000));
+                await new Promise(r => setTimeout(r, 5000));
             }
         }
     } catch (err) {
@@ -357,7 +303,7 @@ export const checkAndRun = async () => {
     }
 };
 
-export const executeSession = async (accountId, isAuto = false, mode = 'daily') => {
+export const executeSession = async (accountId, isAuto = false) => {
     // Note: We don't check 'isRunning' here strictly if we want to allow the loop in checkAndRun to call this.
     // But we should set isRunning = true during the actual runSession to prevent *other* triggers.
     // Since checkAndRun awaits this, it's fine.
@@ -396,7 +342,7 @@ export const executeSession = async (accountId, isAuto = false, mode = 'daily') 
         await sendLog(`▶️ Starting session for **${account.name}**...`, 'start');
         await updateAccountStatus(account.id, 'running');
 
-        const result = await runSession(account, mode);
+        const result = await runSession(account);
 
         if (result.success) {
             console.log(`[Manager] Session for ${account.name} completed successfully.`);

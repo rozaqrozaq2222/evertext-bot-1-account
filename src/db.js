@@ -34,7 +34,6 @@ try {
 // Check if the Persistent DB exists. If not, try to seed it from the deployed 'initial_db.json'
 const DB_PATH = 'data/db.json';
 const SEED_PATH = 'initial_db.json';
-const HANDOUT_LIST_PATH = 'data/handout_list.json'; // New path for handout list
 
 let initialData = { accounts: [], settings: { scheduleStart: '22:00', scheduleEnd: '18:00' } };
 
@@ -53,9 +52,6 @@ if (fs.existsSync(SEED_PATH)) {
 
 // LowDB Setup
 const db = await JSONFilePreset(DB_PATH, initialData);
-
-// Handout List DB Setup
-const hoDb = await JSONFilePreset(HANDOUT_LIST_PATH, []); // Initialize with an empty array
 
 // Check if we just initialized a fresh DB (empty accounts but we have seed data)
 // Note: JSONFilePreset writes defaultData if file doesn't exist. 
@@ -177,37 +173,6 @@ export const setSchedule = async (start, end) => {
   return db.data.settings;
 };
 
-// --- HANDOUT LIST FUNCTIONS ---
-
-export const getHandoutList = async () => {
-  await hoDb.read();
-  hoDb.data ||= [];
-  return hoDb.data;
-};
-
-export const addToHandoutList = async (accountName) => {
-  await hoDb.read();
-  hoDb.data ||= [];
-  if (!hoDb.data.includes(accountName)) {
-    hoDb.data.push(accountName);
-    await hoDb.write();
-    return true;
-  }
-  return false;
-};
-
-export const removeFromHandoutList = async (accountName) => {
-  await hoDb.read();
-  hoDb.data ||= [];
-  const initialLength = hoDb.data.length;
-  hoDb.data = hoDb.data.filter(name => name !== accountName);
-  if (hoDb.data.length !== initialLength) {
-    await hoDb.write();
-    return true;
-  }
-  return false;
-};
-
 export const pauseBot = async (hours) => {
   await db.read();
   const now = new Date();
@@ -223,46 +188,6 @@ export const resumeBot = async () => {
   const current = db.data.settings || {};
   db.data.settings = { ...current, pausedUntil: null };
   await db.write();
-};
-
-// --- ADMIN LIST FUNCTIONS ---
-
-export const getAdminList = async () => {
-  await db.read();
-  return db.data.admins || [];
-};
-
-export const addAdmin = async (userId, username) => {
-  await db.read();
-  db.data.admins ||= [];
-  if (!db.data.admins.find(a => a.id === userId)) {
-    db.data.admins.push({ id: userId, name: username });
-    await db.write();
-    return true;
-  }
-  return false;
-};
-
-export const removeAdmin = async (userId) => {
-  await db.read();
-  db.data.admins ||= [];
-  const initialLength = db.data.admins.length;
-  db.data.admins = db.data.admins.filter(a => a.id !== userId);
-  if (db.data.admins.length !== initialLength) {
-    await db.write();
-    return true;
-  }
-  return false;
-};
-
-export const isAdmin = async (userId) => {
-  // If no admins are set, maybe allow owner? For now, stricly check list.
-  // Use .env to bootstrap the first admin if list is empty?
-  // Let's check environment variable OWNER_ID as a fallback super-admin
-  if (process.env.OWNER_ID && userId === process.env.OWNER_ID) return true;
-
-  await db.read();
-  return (db.data.admins || []).some(a => a.id === userId);
 };
 
 // Run migration on module load to fix any existing plain-text codes

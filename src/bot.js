@@ -1,6 +1,6 @@
 import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder, EmbedBuilder, MessageFlags } from 'discord.js';
 import dotenv from 'dotenv';
-import { addAccount, getAccounts, removeAccount, encrypt, setSchedule, pauseBot, resumeBot, addToHandoutList, removeFromHandoutList, getHandoutList, addAdmin, removeAdmin, getAdminList, isAdmin } from './db.js';
+import { addAccount, getAccounts, removeAccount, encrypt, setSchedule, pauseBot, resumeBot } from './db.js';
 import { executeSession } from './manager.js';
 
 dotenv.config();
@@ -39,35 +39,7 @@ const commands = [
         .setDescription('Resume bot operations immediately'),
     new SlashCommandBuilder()
         .setName('export_db')
-        .setDescription('Download the current database file (Admin only)'),
-    new SlashCommandBuilder()
-        .setName('ho_add')
-        .setDescription('Add account to Handout (HO) List')
-        .addStringOption(option => option.setName('name').setDescription('Account Name').setRequired(true)),
-    new SlashCommandBuilder()
-        .setName('ho_remove')
-        .setDescription('Remove account from Handout (HO) List')
-        .addStringOption(option => option.setName('name').setDescription('Account Name').setRequired(true)),
-    new SlashCommandBuilder()
-        .setName('ho_list')
-        .setDescription('Show Handout (HO) List'),
-    // NEW ADMIN COMMANDS
-    new SlashCommandBuilder()
-        .setName('add_admin')
-        .setDescription('Authorize a user to use this bot')
-        .addUserOption(option => option.setName('user').setDescription('The user to add').setRequired(true)),
-    new SlashCommandBuilder()
-        .setName('remove_admin')
-        .setDescription('Revoke authorization for a user')
-        .addUserOption(option => option.setName('user').setDescription('The user to remove').setRequired(true)),
-    new SlashCommandBuilder()
-        .setName('list_admins')
-        .setDescription('List all authorized admins'),
-    new SlashCommandBuilder()
-        .setName('set_cookie')
-        .setDescription('Update the session cookies (paste string or upload cookies.json)')
-        .addStringOption(option => option.setName('cookies').setDescription('The new cookie string or JSON').setRequired(false))
-        .addAttachmentOption(option => option.setName('file').setDescription('The cookies.json file from setup_login.js').setRequired(false)),
+        .setDescription('Download the current database file'),
 ];
 
 client.once('ready', async () => {
@@ -92,24 +64,7 @@ client.once('ready', async () => {
 client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
-    const { commandName, user } = interaction;
-
-    // --- ACCESS CONTROL CHECK ---
-    // Check if user is an admin or the owner
-    const isUserAdmin = await isAdmin(user.id);
-
-    // Command blocking logic
-    // We allow everyone to 'list_accounts', 'ho_list' ? Or maybe restrict everything?
-    // User requested "individual i add have full command as i do".
-    // So if not admin, reject everything except maybe informative stuff?
-    // Let's safe default: REJECT ALL modifying commands. 
-    // Maybe allow 'list_accounts' for transparency if desired, but safest is restrict all valid actions.
-
-    if (!isUserAdmin) {
-        // Allow a way to bootstrap? No, manual DB edit or env var OWNER_ID is safer.
-        await interaction.reply({ content: '⛔ You are not authorized to use this bot.', flags: MessageFlags.Ephemeral });
-        return;
-    }
+    const { commandName } = interaction;
 
     try {
         if (commandName === 'add_account') {
@@ -129,7 +84,7 @@ client.on('interactionCreate', async interaction => {
                 return;
             }
 
-            // Chunk accounts to avoid exceeding embed limits
+            // Chunk accounts to avoid exceeding split limits
             const chunkSize = 15;
             for (let i = 0; i < accounts.length; i += chunkSize) {
                 const chunk = accounts.slice(i, i + chunkSize);
@@ -190,9 +145,6 @@ client.on('interactionCreate', async interaction => {
                 return;
             }
 
-            // Validation removed to allow cross-midnight schedules (e.g. 22:00 to 08:00)
-            // if (start >= end) { ... }
-
             // Format as HH:00
             const startStr = `${start.toString().padStart(2, '0')}:00`;
             const endStr = `${end.toString().padStart(2, '0')}:00`;
@@ -212,99 +164,6 @@ client.on('interactionCreate', async interaction => {
         }
         else if (commandName === 'export_db') {
             await interaction.reply({ content: '📤 Uploading database file...', files: ['./data/db.json'] });
-        }
-        else if (commandName === 'ho_add') {
-            const name = interaction.options.getString('name');
-            const accounts = await getAccounts();
-            const exists = accounts.find(a => a.name === name);
-
-            if (!exists) {
-                await interaction.reply({ content: `⚠️ Account **${name}** not found in database. Add it first!`, flags: MessageFlags.Ephemeral });
-                return;
-            }
-
-            const added = await addToHandoutList(name);
-            if (added) {
-                await interaction.reply(`✅ Added **${name}** to Handout (HO) List.`);
-            } else {
-                await interaction.reply(`ℹ️ **${name}** is already in the list.`);
-            }
-        }
-        else if (commandName === 'ho_remove') {
-            const name = interaction.options.getString('name');
-            const removed = await removeFromHandoutList(name);
-            if (removed) {
-                await interaction.reply(`✅ Removed **${name}** from Handout (HO) List.`);
-            } else {
-                await interaction.reply(`ℹ️ **${name}** was not in the list.`);
-            }
-        }
-        else if (commandName === 'ho_list') {
-            const list = await getHandoutList();
-            if (list.length === 0) {
-                await interaction.reply('Handout List is empty.');
-            } else {
-                await interaction.reply(`📜 **Handout (HO) List**:\n${list.join(', ')}`);
-            }
-        }
-        // --- ADMIN MANAGEMENT HANDLERS ---
-        else if (commandName === 'add_admin') {
-            const targetUser = interaction.options.getUser('user');
-            const success = await addAdmin(targetUser.id, targetUser.username);
-            if (success) {
-                await interaction.reply(`✅ **${targetUser.username}** has been added as an Admin.`);
-            } else {
-                await interaction.reply(`ℹ️ **${targetUser.username}** is already an Admin.`);
-            }
-        }
-        else if (commandName === 'remove_admin') {
-            const targetUser = interaction.options.getUser('user');
-
-            // Safety measure: Prevent removing yourself if you are the only one?
-            // Optional, but for now we just allow it.
-
-            const success = await removeAdmin(targetUser.id);
-            if (success) {
-                await interaction.reply(`✅ **${targetUser.username}** has been removed from Admins.`);
-            } else {
-                await interaction.reply(`ℹ️ **${targetUser.username}** was not an Admin.`);
-            }
-        }
-        else if (commandName === 'list_admins') {
-            const admins = await getAdminList();
-            if (admins.length === 0) {
-                await interaction.reply('No individual admins set (only Owner/SuperAdmin might have access).');
-            } else {
-                const list = admins.map(a => `**${a.name}** (<@${a.id}>)`).join('\n');
-                await interaction.reply(`🛡️ **Authorized Admins:**\n${list}`);
-            }
-        }
-        else if (commandName === 'set_cookie') {
-            let cookies = interaction.options.getString('cookies');
-            const file = interaction.options.getAttachment('file');
-
-            if (file) {
-                if (!file.name.endsWith('.json')) {
-                    await interaction.reply({ content: '❌ Please upload a valid `.json` file.', flags: MessageFlags.Ephemeral });
-                    return;
-                }
-                const response = await fetch(file.url);
-                cookies = await response.text();
-            }
-
-            if (!cookies) {
-                await interaction.reply({ content: '❌ Please provide cookies via string OR file attachment.', flags: MessageFlags.Ephemeral });
-                return;
-            }
-
-            // Save to DB
-            const { db } = await import('./db.js');
-            await db.read();
-            db.data.settings ||= {};
-            db.data.settings.cookies = cookies;
-            await db.write();
-
-            await interaction.reply({ content: '✅ Session cookies updated successfully!', flags: MessageFlags.Ephemeral });
         }
     } catch (error) {
         console.error('[Discord] Interaction Error:', error);
