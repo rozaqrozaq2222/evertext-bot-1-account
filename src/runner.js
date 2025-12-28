@@ -320,7 +320,7 @@ export const runSession = async (account, mode = 'daily') => {
         if (mode === 'handout') {
             commands = ["ho", "quit", "y"];
         } else {
-            commands = ["y", "auto", "y", "quit", "y"];
+            commands = ["y", "auto", "y", "3", "1", "y", "quit", "y"];
         }
 
         for (const cmd of commands) {
@@ -328,9 +328,9 @@ export const runSession = async (account, mode = 'daily') => {
             await send(cmd, 500); // 0.5s delay
         }
 
-        // Step 5: Wait 60 Seconds before closing
-        console.log('\n🛑 Step 5: Waiting 60 seconds before closing session...');
-        await new Promise(r => setTimeout(r, 60000));
+        // Step 5: Wait 90 Seconds before closing
+        console.log('\n🛑 Step 5: Waiting 90 seconds before closing session...');
+        await new Promise(r => setTimeout(r, 90000));
 
         console.log('✅ Session sequence complete.');
         await browser.close();
