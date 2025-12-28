@@ -65,6 +65,10 @@ client.once(Events.ClientReady, async () => {
     const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
     try {
         console.log('[Discord] Refreshing application (/) commands.');
+
+        // 🧹 Cleanup: Delete ALL global commands to remove "ghost" [ADMIN] duplicates
+        console.log('[Discord] Cleaning up old global commands...');
+        await rest.put(Routes.applicationCommands(client.user.id), { body: [] });
         // If GUILD_ID is set and not the placeholder, register to guild
         if (process.env.GUILD_ID && process.env.GUILD_ID !== 'your_guild_id_here' && process.env.GUILD_ID.trim() !== '') {
             try {
