@@ -14,30 +14,8 @@ export const runSession = async (account, mode = 'daily') => {
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
-                '--disable-gpu',
-                '--disable-software-rasterizer',
-                '--disable-accelerated-2d-canvas',
-                '--disable-accelerated-video-decode',
-                '--disable-3d-apis',
-                '--disable-renderer-backgrounding',
-                '--disable-background-timer-throttling',
-                '--disable-backgrounding-occluded-windows',
-                '--disable-ipc-flooding-protection',
-                '--disk-cache-size=1',
-                '--media-cache-size=1',
-                '--aggressive-cache-discard',
-                '--disable-cache',
-                '--disable-application-cache',
-                '--disable-offline-load-stale-cache',
-                '--disable-extensions',
-                '--disable-component-extensions-with-background-pages',
-                '--disable-default-apps',
-                '--disable-sync',
-                '--disable-translate',
-                '--disable-notifications',
-                '--disable-speech-api',
-                '--disable-webgl',
-                '--window-size=800,600',
+                '--disable-blink-features=AutomationControlled',
+                '--window-size=1280,720',
                 '--no-first-run'
             ]
         };
@@ -58,12 +36,19 @@ export const runSession = async (account, mode = 'daily') => {
         // 🛠️ FIX: Set User Agent to mimic regular Chrome (Bypass Headless detection)
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
 
+        // Extra stealth to remove 'webdriver' property
+        await page.evaluateOnNewDocument(() => {
+            Object.defineProperty(navigator, 'webdriver', {
+                get: () => false,
+            });
+        });
+
         // Optimize memory and block unnecessary resources
-        await page.setViewport({ width: 800, height: 600 });
+        await page.setViewport({ width: 1280, height: 720 });
         await page.setRequestInterception(true);
 
-        // Block even more resources to save memory
-        const BLOCKED_RESOURCES_EXTENDED = ['image', 'font', 'media', 'stylesheet', 'texttrack', 'eventsource', 'manifest'];
+        // Block even more resources to save memory (keep stylesheets as some sites use them for detection/logic)
+        const BLOCKED_RESOURCES_EXTENDED = ['image', 'font', 'media', 'texttrack', 'eventsource', 'manifest'];
 
         page.on('request', (req) => {
             const url = req.url();
@@ -103,7 +88,13 @@ export const runSession = async (account, mode = 'daily') => {
             console.log('⚠️ Failed to load cookies:', error.message);
         }
 
-        await page.goto(GAME_URL, { waitUntil: 'domcontentloaded' });
+        const response = await page.goto(GAME_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+        const status = response ? response.status() : 'Unknown';
+
+        if (status === 403) {
+            console.log('❌ ACCESS DENIED (403): The server is blocking the bot request.');
+            throw new Error('403 Forbidden - Bot is likely blocked by Cloudflare/Nginx');
+        }
 
         // Check server capacity with retry
         let activeUsers = 0, maxUsers = 0, retries = 0;
@@ -131,6 +122,10 @@ export const runSession = async (account, mode = 'daily') => {
 
             if (currentUrl.includes('discord.com') || bodyPreview.toLowerCase().includes('login')) {
                 console.log('❌ SESSION EXPIRED: Bot is stuck on a login or auth page. Please refresh cookies.json');
+            }
+
+            if (bodyPreview.includes('403 Forbidden')) {
+                throw new Error('403 Forbidden - Server level block encountered');
             }
         } else if (activeUsers >= maxUsers) {
             console.log('❌ System full. Aborting session.');
