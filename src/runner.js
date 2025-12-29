@@ -293,9 +293,9 @@ export const runSession = async (account, mode = 'daily') => {
         console.log('✅ Authentication flow complete.');
 
         // Step 3: THE BIG WAIT (Blind Wait for Dailies/Process)
-        console.log('\n⏳ Step 3: Waiting 3 minutes 20 seconds (200s) for process to complete...');
+        console.log('\n⏳ Step 3: Waiting 4 minutes (240s) for process to complete...');
         // We wait blindly as per "Better Flow" reference
-        await new Promise(r => setTimeout(r, 200000));
+        await new Promise(r => setTimeout(r, 240000));
 
         console.log(`\n🚀 Step 4: Executing cleanup command sequence (Mode: ${mode})...`);
 
@@ -312,8 +312,8 @@ export const runSession = async (account, mode = 'daily') => {
         }
 
         // Step 5: Wait 90 Seconds before closing
-        console.log('\n🛑 Step 5: Waiting 90 seconds before closing session...');
-        await new Promise(r => setTimeout(r, 90000));
+        console.log('\n🛑 Step 5: Waiting 2 minutes (120s) before closing session...');
+        await new Promise(r => setTimeout(r, 120000));
 
         console.log('✅ Session sequence complete.');
         await browser.close();
