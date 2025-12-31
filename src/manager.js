@@ -1,6 +1,6 @@
 import cron from 'node-cron';
 import { getAccounts, updateAccountStatus, getAccountDecrypted, getSchedule, getHandoutList, updateLastHandout, pauseBot } from './db.js';
-import { runSession } from './runner.js';
+import { runDirectSession } from './direct_runner.js';
 import { sendLog } from './bot.js';
 
 
@@ -406,7 +406,7 @@ export const executeSession = async (accountId, isAuto = false, mode = 'daily') 
         await sendLog(`▶️ Starting session for **${account.name}**...`, 'start');
         await updateAccountStatus(account.id, 'running');
 
-        const result = await runSession(account, mode);
+        const result = await runDirectSession(account, mode);
 
         if (result.success) {
             console.log(`[Manager] Session for ${account.name} completed successfully.`);
