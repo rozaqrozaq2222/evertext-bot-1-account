@@ -14,20 +14,24 @@ export const runSession = async (account, mode = 'daily') => {
         // Determine executable path based on OS
         const isWindows = process.platform === 'win32';
         const config = {
-            headless: true, // Background mode (no windows)
+            headless: true, // Specifically use the new headless mode if supported
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-blink-features=AutomationControlled',
-                '--window-size=1280,720',
+                '--window-size=1920,1080',
                 '--no-first-run',
                 '--disable-infobars',
                 '--hide-scrollbars',
                 '--disable-notifications',
                 '--disable-popup-blocking',
-                '--disable-dev-shm-usage'
+                '--disable-dev-shm-usage',
+                '--disable-gpu',
+                '--no-zygote',
+                '--single-process'
             ],
-            ignoreHTTPSErrors: true
+            ignoreHTTPSErrors: true,
+            defaultViewport: { width: 1920, height: 1080 }
         };
 
         if (isWindows) {
@@ -38,20 +42,12 @@ export const runSession = async (account, mode = 'daily') => {
 
         const page = await browser.newPage();
 
-        // 🛠️ Stealth handles User Agent better, but we can still set a fresh one
-        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36');
-
-        // Optimize memory and block unnecessary resources
-        await page.setViewport({ width: 1280, height: 720 });
+        // 🛠️ Optimization: Only block standard domains, NOT types (fonts/images) 
+        // because sites use these for fingerprinting.
         await page.setRequestInterception(true);
-
-        // Block even more resources to save memory (keep stylesheets as some sites use them for detection/logic)
-        const BLOCKED_RESOURCES_EXTENDED = ['image', 'font', 'media', 'texttrack', 'eventsource', 'manifest'];
-
         page.on('request', (req) => {
             const url = req.url();
-            if (BLOCKED_DOMAINS.some(domain => url.includes(domain)) ||
-                BLOCKED_RESOURCES_EXTENDED.includes(req.resourceType())) {
+            if (BLOCKED_DOMAINS.some(domain => url.includes(domain))) {
                 req.abort();
             } else {
                 req.continue();
