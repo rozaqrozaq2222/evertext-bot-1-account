@@ -29,26 +29,24 @@ const SAVE_PATHS = [
     const pages = await browser.pages();
     const page = pages.length > 0 ? pages[0] : await browser.newPage();
 
+    console.log('[CookieRefresher] Clearing existing cookies to force fresh login...');
+    const client = await page.target().createCDPSession();
+    await client.send('Network.clearBrowserCookies');
+
     console.log('[CookieRefresher] Navigating to Evertext...');
     await page.goto(TARGET_URL, { waitUntil: 'networkidle2' });
 
-    // Check if logged in
-    const isLoggedIn = await page.evaluate(() => {
-        return document.body.innerText.includes('Logout') || document.body.innerText.includes('Session ID');
-    });
+    console.log('[CookieRefresher] Please LOGIN manually in the window.');
+    console.log('[CookieRefresher] Waiting up to 5 minutes for login...');
 
-    if (!isLoggedIn) {
-        console.log('[CookieRefresher] Not logged in. Please log in manually inside the browser window!');
-        console.log('[CookieRefresher] Waiting up to 2 minutes for login...');
-        try {
-            await page.waitForFunction(() => {
-                return document.body.innerText.includes('Logout') || document.body.innerText.includes('Session ID');
-            }, { timeout: 120000 });
-        } catch (e) {
-            console.error('[CookieRefresher] Login timed out. Exiting.');
-            await browser.close();
-            return;
-        }
+    try {
+        await page.waitForFunction(() => {
+            return document.body.innerText.includes('Logout') || document.body.innerText.includes('Session ID');
+        }, { timeout: 300000 });
+    } catch (e) {
+        console.error('[CookieRefresher] Login timed out. Exiting.');
+        await browser.close();
+        return;
     }
 
     console.log('[CookieRefresher] Login detected! Capturing cookies...');
@@ -56,7 +54,7 @@ const SAVE_PATHS = [
     // wait a bit for cloudflare/socket cookies to settle
     await new Promise(resolve => setTimeout(resolve, 3000));
 
-    const client = await page.target().createCDPSession();
+    // client is already defined above
     const { cookies } = await client.send('Network.getAllCookies');
 
     console.log(`[CookieRefresher] Captured ${cookies.length} cookies.`);

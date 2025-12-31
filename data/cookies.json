@@ -1,10 +1,10 @@
 [
   {
     "name": "session",
-    "value": "eyJfZnJlc2giOmZhbHNlLCJfcGVybWFuZW50Ijp0cnVlLCJzZXNzaW9uX2lkIjoiMTFhNjdlMjctOWY0My00NjcyLTlmYzAtYjgxMzc2YmIzMzIyIn0.aVS6RA.tcCSFZ2z74c9y7lrW3HZQD5bt60",
+    "value": "eyJfZnJlc2giOmZhbHNlLCJfcGVybWFuZW50Ijp0cnVlLCJzZXNzaW9uX2lkIjoiNjQzNjYxZWUtYWU3NS00YzE4LTk5ZTAtNDgwZGFiNzU3OTNjIn0.aVS7AQ.FwvDKNd2zPx1cjSqTkGTh_pcaUg",
     "domain": "evertext.sytes.net",
     "path": "/",
-    "expires": 1767246801.153056,
+    "expires": 1767246990.815432,
     "size": 157,
     "httpOnly": true,
     "secure": false,
