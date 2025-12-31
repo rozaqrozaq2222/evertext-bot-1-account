@@ -12,10 +12,7 @@ export const runDirectSession = async (account, mode = 'daily') => {
         try {
             if (fs.existsSync('./data/cookies.json')) {
                 const cookies = JSON.parse(fs.readFileSync('./data/cookies.json'));
-                const session = cookies.find(c => c.name === 'session');
-                if (session) {
-                    sessionCookie = `session=${session.value}`;
-                }
+                sessionCookie = cookies.map(c => `${c.name}=${c.value}`).join('; ');
             }
         } catch (err) {
             console.error('[DirectRunner] Failed to read cookies:', err.message);
@@ -28,9 +25,12 @@ export const runDirectSession = async (account, mode = 'daily') => {
         const socket = io(SOCKET_URL, {
             extraHeaders: {
                 'Cookie': sessionCookie,
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
                 'Origin': 'https://evertext.sytes.net',
-                'Referer': 'https://evertext.sytes.net/'
+                'Referer': 'https://evertext.sytes.net/',
+                'Sec-Ch-Ua': '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+                'Sec-Ch-Ua-Mobile': '?0',
+                'Sec-Ch-Ua-Platform': '"Windows"'
             },
             transports: ['websocket'], // Force WebSocket to bypass HTTP polling 403s
             reconnection: false,
@@ -57,21 +57,31 @@ export const runDirectSession = async (account, mode = 'daily') => {
         }, 480000);
 
         socket.on('connect', () => {
-            console.log('[DirectRunner] Connected to Evertext WebSocket.');
-            // Some servers need a small delay after connection
+            console.log('[DirectRunner] Connected to Socket.io Server (Namespace joined).');
+        });
+
+        socket.on('connection_success', (data) => {
+            console.log(`[DirectRunner] Connection Authenticated. Session ID: ${data.sessionID}`);
+            console.log('[DirectRunner] Sending stop and then start...');
+            socket.emit('stop'); // Reset any existing terminal session
             setTimeout(() => {
-                console.log('[DirectRunner] Sending start event...');
                 socket.emit('start', { args: '' });
                 phase = 'start';
-            }, 1000);
+            }, 500);
         });
 
         socket.on('disconnect', (reason) => {
             console.log(`[DirectRunner] WebSocket Disconnected. Reason: ${reason}`);
-            if (phase !== 'done' && phase !== 'idle' && !socket.connected) {
-                // If we didn't finish properly, resolve as failed
+            if (reason === 'io server disconnect') {
+                console.error('[DirectRunner] Server kicked the connection. Cookie might be invalid or expired.');
+            }
+            if (!['done', 'idle', 'cleaning'].includes(phase) && !socket.connected) {
                 resolve({ success: false, reason: `Disconnected: ${reason}` });
             }
+        });
+
+        socket.on('error', (err) => {
+            console.error('[DirectRunner] Socket Error:', err);
         });
 
         socket.on('output', async (data) => {
@@ -79,8 +89,8 @@ export const runDirectSession = async (account, mode = 'daily') => {
             outputBuffer += text;
 
             // Log output lines for visibility
-            if (text.includes('\n')) {
-                const lines = text.split('\n');
+            if (text.includes('\n') || text.includes('\r')) {
+                const lines = text.split(/[\r\n]+/);
                 lines.forEach(l => {
                     if (l.trim()) console.log(`[Terminal] ${l.trim()}`);
                 });
