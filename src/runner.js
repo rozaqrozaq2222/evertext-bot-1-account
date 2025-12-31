@@ -1,5 +1,9 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import fs from 'fs';
+
+// Initialize stealth plugin
+puppeteer.use(StealthPlugin());
 
 const GAME_URL = 'https://evertext.sytes.net/';
 const BLOCKED_DOMAINS = ['google-analytics.com', 'googletagmanager.com', 'facebook.net'];
@@ -16,32 +20,26 @@ export const runSession = async (account, mode = 'daily') => {
                 '--disable-setuid-sandbox',
                 '--disable-blink-features=AutomationControlled',
                 '--window-size=1280,720',
-                '--no-first-run'
-            ]
+                '--no-first-run',
+                '--disable-infobars',
+                '--hide-scrollbars',
+                '--disable-notifications',
+                '--disable-popup-blocking',
+                '--disable-dev-shm-usage'
+            ],
+            ignoreHTTPSErrors: true
         };
 
         if (isWindows) {
             config.executablePath = 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe';
-        } else {
-            // On Linux/Zeabur, let Puppeteer use its bundled Chromium or system installed one
-            // If needed, we can specificy typical linux paths, but default usually works best if deps are installed
-            console.log('[Runner] Running on Linux/Server. Using default Puppeteer executable.');
         }
 
         browser = await puppeteer.launch(config);
 
-
         const page = await browser.newPage();
 
-        // 🛠️ FIX: Set User Agent to mimic regular Chrome (Bypass Headless detection)
-        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
-
-        // Extra stealth to remove 'webdriver' property
-        await page.evaluateOnNewDocument(() => {
-            Object.defineProperty(navigator, 'webdriver', {
-                get: () => false,
-            });
-        });
+        // 🛠️ Stealth handles User Agent better, but we can still set a fresh one
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36');
 
         // Optimize memory and block unnecessary resources
         await page.setViewport({ width: 1280, height: 720 });
